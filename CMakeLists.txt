@@ -1,5 +1,5 @@
 
-set(MY_PROJECT_NAME test)
+set(MY_PROJECT_NAME Hatching)
 cmake_minimum_required(VERSION 3.17)
 project(${MY_PROJECT_NAME})
 
