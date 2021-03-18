@@ -14,8 +14,8 @@ endif ()
 
 if (APPLE)
     message ("-- Compiling on Mac OSX")
-    set(PATH_TO_GLFW_HEADER ~/Downloads/glfw-3.3.3.bin.MACOS/include)
-    set(PATH_TO_GLFW_LIB ~/Downloads/glfw-3.3.3.bin.MACOS/lib-macos)
+    set(PATH_TO_GLFW_HEADER ~/glfw-3.3.3.bin.MACOS/include)
+    set(PATH_TO_GLFW_LIB ~/glfw-3.3.3.bin.MACOS/lib-x86_64)
     set(GLFW_LIB_NAME libglfw3.a)
     set(ADDITIONAL_LIBS )
 
