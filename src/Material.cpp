@@ -3,24 +3,24 @@
 //
 
 #include <glad/gl.h>
-#include "Program.h"
+#include "Material.h"
 
-Program::Program(Shader &vertexShader, Shader &fragmentShader) : fragmentShader(fragmentShader) , vertexShader(vertexShader), program(0) {
+Material::Material(Shader &vertexShader, Shader &fragmentShader) : fragmentShader(fragmentShader) , vertexShader(vertexShader), program(0) {
     createProgram();
 }
 
-void Program::createProgram() {
+void Material::createProgram() {
     program = glCreateProgram();
     glAttachShader(program, vertexShader.getShader());
     glAttachShader(program, fragmentShader.getShader());
     glLinkProgram(program);
 }
 
-void Program::useProgram() const {
+void Material::useProgram() const {
     glUseProgram(program);
 }
 
-GLuint Program::getProgram() const {
+GLuint Material::getProgram() const {
     return program;
 }
 

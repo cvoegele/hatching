@@ -1090,7 +1090,7 @@ char* XMLNode::ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr )
             // Multiple declarations are allowed but all declarations
             // must occur before anything else. 
             //
-            // Optimized due to a security test case. If the first node is 
+            // Optimized due to a security wosc case. If the first node is
             // a declaration, and the last node is a declaration, then only 
             // declarations have so far been added.
             bool wellLocated = false;

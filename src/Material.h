@@ -2,17 +2,20 @@
 // Created by Christoph Vögele on 16/03/2021.
 //
 
-#ifndef TEST_PROGRAM_H
-#define TEST_PROGRAM_H
+#ifndef TEST_MATERIAL_H
+#define TEST_MATERIAL_H
 
 
 #include "Shader.h"
 
-class Program {
+class Material {
 public:
-    Program(Shader &vertexShader, Shader &fragmentShader);
+    Material(Shader &vertexShader, Shader &fragmentShader);
+
     void createProgram();
+
     void useProgram() const;
+
     GLuint getProgram() const;
 
 
@@ -23,4 +26,4 @@ private:
 };
 
 
-#endif //TEST_PROGRAM_H
+#endif //TEST_MATERIAL_H
