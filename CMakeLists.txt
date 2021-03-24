@@ -1,5 +1,5 @@
 
-set(MY_PROJECT_NAME test)
+set(MY_PROJECT_NAME Hatching)
 cmake_minimum_required(VERSION 3.17)
 project(${MY_PROJECT_NAME})
 
@@ -14,8 +14,8 @@ endif ()
 
 if (APPLE)
     message ("-- Compiling on Mac OSX")
-    set(PATH_TO_GLFW_HEADER ~/Downloads/glfw-3.3.3.bin.MACOS/include)
-    set(PATH_TO_GLFW_LIB ~/Downloads/glfw-3.3.3.bin.MACOS/lib-macos)
+    set(PATH_TO_GLFW_HEADER ~/glfw-3.3.3.bin.MACOS/include)
+    set(PATH_TO_GLFW_LIB ~/glfw-3.3.3.bin.MACOS/lib-x86_64)
     set(GLFW_LIB_NAME libglfw3.a)
     set(ADDITIONAL_LIBS )
 
