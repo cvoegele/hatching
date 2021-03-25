@@ -24,3 +24,11 @@ GLuint Material::getProgram() const {
     return program;
 }
 
+void Material::reloadMaterial() {
+    vertexShader.compile();
+    fragmentShader.compile();
+    glAttachShader(program, vertexShader.getShader());
+    glAttachShader(program, fragmentShader.getShader());
+    glLinkProgram(program);
+}
+

@@ -21,6 +21,7 @@ private:
     GLuint shader{};
     const char* source;
     int type;
+    std::string path;
 };
 
 

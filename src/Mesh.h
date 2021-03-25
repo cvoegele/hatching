@@ -18,7 +18,11 @@ public:
 
     void draw();
 
-    static glm::mat4x4 getModelMatrix();
+    glm::mat4x4 getModelMatrix();
+
+    GLuint getMVPLocation() const;
+
+    Material& getMaterial();
 
 private:
     std::vector<glm::vec3> vertices;

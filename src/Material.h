@@ -18,6 +18,8 @@ public:
 
     GLuint getProgram() const;
 
+    void reloadMaterial();
+
 
 private:
     Shader vertexShader;

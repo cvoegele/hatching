@@ -182,29 +182,7 @@ Mesh::Mesh(Material material)
 }
 
 void Mesh::draw() {
-    int width, height;
-    width = 640;
-    height = 480;
-
-    glm::mat4 v = glm::lookAt(glm::vec3(0, 0, -3),
-                              glm::vec3(0, 0, 0),
-                              glm::vec3(0, 1, 0));
-
-    glm::mat4x4 m, p, mvp;
-    m = getModelMatrix();
-    glm::rotate(m, (float) glfwGetTime(), glm::vec3(0.f, 0.f, 1.f));
-    p = glm::perspective(45.f,
-                         (float) width / (float) height,
-                         0.1f, 1000.f);
-
-    mvp = p * v * m;
-
-    material.useProgram();
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-
-    glUniformMatrix4fv(uniformMvpPosition, 1, GL_FALSE, &mvp[0][0]);
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, nullptr);
 }
 
@@ -212,4 +190,12 @@ glm::mat4x4 Mesh::getModelMatrix() {
     double time = glfwGetTime();
     glm::mat4 r = glm::rotate(glm::mat4(1.0), (float) time / 10.f, glm::vec3(1, -1, 1));
     return glm::mat4(1.0) * r;
+}
+
+GLuint Mesh::getMVPLocation() const {
+    return uniformMvpPosition;
+}
+
+Material &Mesh::getMaterial() {
+    return material;
 }

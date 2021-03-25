@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "Mesh.h"
+#include "Camera.h"
 
 class Renderer {
 public:
@@ -23,8 +24,13 @@ public:
 
     void disableGLFeature(const int& attribute);
 
+    float getAspectRatio() const;
+
+    void setCamera(Camera& camera);
+
 private:
     std::vector<Mesh> meshes;
+    Camera camera;
     GLFWwindow *window;
     int targetWidth;
     int targetHeight;
