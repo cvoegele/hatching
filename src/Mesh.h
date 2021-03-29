@@ -14,6 +14,8 @@ class Mesh {
 public:
     Mesh(Material material);
 
+    Mesh(Material material, const std::string &path);
+
     void push();
 
     void draw();
@@ -22,14 +24,16 @@ public:
 
     GLuint getMVPLocation() const;
 
-    Material& getMaterial();
+    Material &getMaterial();
 
 private:
+    bool isIndexed();
+    void readFromFile(const std::string& path);
+
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> colors;
     std::vector<int> indices;
     Material material;
-    glm::mat4x4 modelMatrix;
     GLuint uniformMvpPosition;
     GLuint vertexBuffer;
     GLuint colorBuffer;

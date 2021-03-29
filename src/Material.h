@@ -11,6 +11,7 @@
 class Material {
 public:
     Material(Shader &vertexShader, Shader &fragmentShader);
+    Material();
 
     void createProgram();
 

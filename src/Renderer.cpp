@@ -66,6 +66,7 @@ void Renderer::startRenderLoop() {
         }
 
 
+        glClearColor(1.f, 1.f, 1.f, 1.f);
         glViewport(0, 0, targetWidth, targetHeight);
         glClear(GL_COLOR_BUFFER_BIT);
 

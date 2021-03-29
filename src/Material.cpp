@@ -32,3 +32,7 @@ void Material::reloadMaterial() {
     glLinkProgram(program);
 }
 
+Material::Material() : vertexShader(Shader(true)), fragmentShader(Shader(false)), program(0) {
+    createProgram();
+}
+

@@ -7,8 +7,10 @@
 #include "src/Material.h"
 #include "src/Mesh.h"
 #include "src/Renderer.h"
+#include "src/Util.h"
 
 int main() {
+
 
     Renderer renderer(640, 480);
 
@@ -25,16 +27,18 @@ int main() {
     renderer.enableGLFeature(GL_CULL_FACE);
     //renderer.disableGLFeature(GL_CULL_FACE);
 
-    Shader vertexShader("../src/vertex.glsl", true);
-    Shader fragmentShader("../src/fragment.glsl", false);
+    Shader vertexShader("../src/shaders/vertex.glsl", true);
+    Shader fragmentShader("../src/shaders/fragment.glsl", false);
 
     Material material(vertexShader, fragmentShader);
     material.useProgram();
     Mesh mesh(material);
 
-    mesh.push();
+    //mesh.push();
+    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
+    plyMesh.push();
 
-    renderer.addMesh(mesh);
+    renderer.addMesh(plyMesh);
     renderer.startRenderLoop();
 
 }
