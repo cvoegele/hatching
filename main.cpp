@@ -25,7 +25,8 @@ int main() {
 
     renderer.setup();
     renderer.enableGLFeature(GL_CULL_FACE);
-    //renderer.enableGLFeature(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    renderer.enableGLFeature(GL_DEPTH_TEST);
     //renderer.disableGLFeature(GL_CULL_FACE);
 
     Shader vertexShader("../src/shaders/vertex.glsl", true);
@@ -36,7 +37,7 @@ int main() {
 //    Mesh mesh(material);
 
 //    mesh.push();
-    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
+    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
     plyMesh.push();
 
     renderer.addMesh(plyMesh);

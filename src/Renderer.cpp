@@ -65,10 +65,9 @@ void Renderer::startRenderLoop() {
 
         }
 
-
         glClearColor(1.f, 1.f, 1.f, 1.f);
         glViewport(0, 0, targetWidth, targetHeight);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (auto feature : enabledGLFeatures) {
             glEnable(feature);
