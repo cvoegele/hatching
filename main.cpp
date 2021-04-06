@@ -8,6 +8,7 @@
 #include "src/Mesh.h"
 #include "src/Renderer.h"
 #include "src/Util.h"
+#include "src/Cube.h"
 
 int main() {
 
@@ -19,7 +20,7 @@ int main() {
                   0.1f,
                   1000.f,
                   glm::vec3(0, 0, 0),
-                  glm::vec3(0, 0, -1));
+                  glm::vec3(0, 0, -5));
 
     renderer.setCamera(camera);
 
@@ -33,14 +34,15 @@ int main() {
     Shader fragmentShader("../src/shaders/fragment.glsl", false);
 
     Material material(vertexShader, fragmentShader);
-    material.useProgram();
-//    Mesh mesh(material);
+////    Mesh mesh(material);
+//
+////    mesh.push();
+//    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
+//    plyMesh.push();
+    Cube cubus(material);
+    cubus.push();
 
-//    mesh.push();
-    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
-    plyMesh.push();
-
-    renderer.addMesh(plyMesh);
+    renderer.addMesh(cubus);
     renderer.startRenderLoop();
 
 }

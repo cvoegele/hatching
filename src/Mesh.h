@@ -12,8 +12,6 @@
 
 class Mesh {
 public:
-    Mesh(Material material);
-
     Mesh(Material material, const std::string &path);
 
     void push();
@@ -31,19 +29,22 @@ private:
 
     void readFromFile(const std::string &path);
 
-    void computeNormals();
-
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> colors;
     std::vector<glm::vec3> normals;
-    std::vector<int> indices;
-    Material material;
     GLuint uniformMvpPosition;
     GLuint vertexBuffer;
     GLuint colorBuffer;
     GLuint indexBuffer;
     GLuint normalBuffer;
 
+protected:
+    explicit Mesh(Material material);
+
+    Material material;
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec3> colors;
+    std::vector<int> indices;
+
+    void computeNormals();
 };
 
 #endif //TEST_MESH_H
