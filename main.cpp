@@ -16,15 +16,16 @@ int main() {
 
     Camera camera(45.f,
                   renderer.getAspectRatio(),
-                  1.f,
+                  0.1f,
                   1000.f,
                   glm::vec3(0, 0, 0),
-                  glm::vec3(0, 0, -3));
+                  glm::vec3(0, 0, -1));
 
     renderer.setCamera(camera);
 
     renderer.setup();
     renderer.enableGLFeature(GL_CULL_FACE);
+    //renderer.enableGLFeature(GL_DEPTH_TEST);
     //renderer.disableGLFeature(GL_CULL_FACE);
 
     Shader vertexShader("../src/shaders/vertex.glsl", true);
@@ -32,10 +33,10 @@ int main() {
 
     Material material(vertexShader, fragmentShader);
     material.useProgram();
-    Mesh mesh(material);
+//    Mesh mesh(material);
 
-    //mesh.push();
-    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
+//    mesh.push();
+    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
     plyMesh.push();
 
     renderer.addMesh(plyMesh);

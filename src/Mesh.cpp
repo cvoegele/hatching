@@ -18,6 +18,7 @@ void Mesh::push() {
 
     float *flatVertices = &vertices[0].x;
     float *flatColors = &colors[0].x;
+    float *flatNormals = &normals[0].x;
 
     //save as member, all glGen- Calls
     glGenBuffers(1, &vertexBuffer);
@@ -34,6 +35,13 @@ void Mesh::push() {
     glEnableVertexAttribArray(colorPosition);
     glVertexAttribPointer(colorPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    glGenBuffers(1, &normalBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size() * 3, flatNormals, GL_STATIC_DRAW);
+    GLuint normalPosition = glGetAttribLocation(material.getProgram(), "vNor");
+    glEnableVertexAttribArray(normalPosition);
+    glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -45,6 +53,7 @@ Mesh::Mesh(Material material)
         : vertices(std::vector<glm::vec3>()),
           colors(std::vector<glm::vec3>()),
           indices(std::vector<int>()),
+          normals(std::vector<glm::vec3>()),
           material(material),
           uniformMvpPosition(0),
           indexBuffer(0),
@@ -183,6 +192,8 @@ Mesh::Mesh(Material material)
         indices.push_back(vertexIndice);
     }
 
+    computeNormals();
+
 }
 
 void Mesh::draw() {
@@ -198,7 +209,7 @@ void Mesh::draw() {
 
 glm::mat4x4 Mesh::getModelMatrix() {
     double time = glfwGetTime();
-    glm::mat4 s = glm::scale(glm::mat4(1.0),glm::vec3(3.f,3.f,3.f));
+    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(3.f, 3.f, 3.f));
     glm::mat4 r = glm::rotate(glm::mat4(1.0), (float) time / 10.f, glm::vec3(1, -1, 1));
     return glm::mat4(1.0) * r * s;
 }
@@ -214,6 +225,7 @@ Material &Mesh::getMaterial() {
 Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          vertices(std::vector<glm::vec3>()),
                                                          colors(std::vector<glm::vec3>()),
+                                                         normals(std::vector<glm::vec3>()),
                                                          indices(std::vector<int>()),
                                                          uniformMvpPosition(0),
                                                          indexBuffer(0),
@@ -225,6 +237,7 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
     for (int i = 0; i < vertices.size(); ++i) {
         colors.emplace_back(1.f, 0.f, 0.f);
     }
+    computeNormals();
 }
 
 bool Mesh::isIndexed() {
@@ -338,25 +351,37 @@ void Mesh::readFromFile(const std::string &filepath) {
             std::vector<int> facces(faces->count * 3);
             std::memcpy(facces.data(), faces->buffer.get(), numIndicesBytes);
 
-
             for (auto face : facces) {
                 indices.push_back(face);
             }
-
-            //return Mesh(verticesAll);
         }
-
-//        // Example Two: converting to your own application type
-//        {
-//            std::vector<float3> verts_floats;
-//            std::vector<double3> verts_doubles;
-//            if (vertices->t == tinyply::Type::FLOAT32) { /* as floats ... */ }
-//            if (vertices->t == tinyply::Type::FLOAT64) { /* as doubles ... */ }
-//        }
-
     }
     catch (const std::exception &e) {
         std::cerr << "Caught tinyply exception: " << e.what() << std::endl;
     }
 
+}
+
+void Mesh::computeNormals() {
+
+    this->normals = std::vector<glm::vec3>(vertices.size(),glm::vec3());
+
+    for (int i = 0; i < indices.size(); i += 3) {
+        auto i0 = indices[i];
+        auto i1 = indices[i + 1];
+        auto i2 = indices[i + 2];
+        auto a = vertices[i0];
+        auto b = vertices[i1];
+        auto c = vertices[i2];
+
+        auto ba = b - a;
+        auto ca = c - a;
+
+        auto normal = cross(ca, ba);
+        normal = normalize(normal);
+
+        normals[i0] = normal;
+        normals[i1] = normal;
+        normals[i2] = normal;
+    }
 }
