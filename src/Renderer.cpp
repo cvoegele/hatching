@@ -3,6 +3,8 @@
 //
 
 #include <glad/gl.h>
+#include "glm/ext.hpp"
+#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include "Renderer.h"
 
@@ -65,7 +67,7 @@ void Renderer::startRenderLoop() {
 
         }
 
-        glClearColor(1.f, 1.f, 1.f, 1.f);
+        glClearColor(1.f, 0.82f, .84f, 1.f);
         glViewport(0, 0, targetWidth, targetHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -74,8 +76,15 @@ void Renderer::startRenderLoop() {
         }
 
         for (auto mesh : meshes) {
+            mesh.getMaterial().useProgram();
+
+            auto meshModelMatrix = mesh.getModelMatrix();
             glUniformMatrix4fv(mesh.getMVPLocation(), 1, GL_FALSE,
-                               &camera.projectModelMatrix(mesh.getModelMatrix())[0][0]);
+                               &camera.projectModelMatrix(meshModelMatrix)[0][0]);
+            glUniformMatrix4fv(mesh.getMLocation(), 1, GL_FALSE, &meshModelMatrix[0][0]);
+            glUniformMatrix4fv(mesh.getMNormalLocation(), 1, GL_FALSE, &mesh.getNormalModelMatrix()[0][0]);
+            glUniform3fv(mesh.getCameraLocation(), 1, &camera.getCameraPosition()[0]);
+
             mesh.draw();
         }
 

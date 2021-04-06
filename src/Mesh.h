@@ -20,7 +20,15 @@ public:
 
     glm::mat4x4 getModelMatrix();
 
+    glm::mat4x4 getNormalModelMatrix();
+
     GLuint getMVPLocation() const;
+
+    GLuint getMLocation() const;
+
+    GLuint getMNormalLocation() const;
+
+    GLuint getCameraLocation() const;
 
     Material &getMaterial();
 
@@ -31,6 +39,9 @@ private:
 
     std::vector<glm::vec3> normals;
     GLuint uniformMvpPosition;
+    GLuint uniformMPosition;
+    GLuint uniformCameraPosition;
+    GLuint uniformMNormalPosition;
     GLuint vertexBuffer;
     GLuint colorBuffer;
     GLuint indexBuffer;

@@ -15,6 +15,8 @@ public:
 
     glm::mat4 projectModelMatrix(glm::mat4 modelMatrix);
 
+    glm::vec3 getCameraPosition();
+
 private:
     float FOV;
     float aspect;

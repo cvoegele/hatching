@@ -3,20 +3,17 @@
 //
 
 #include <glad/gl.h>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <memory>
 #include <iostream>
 #include <example-utils.hpp>
 #include <tinyply.h>
+#include <glm/ext.hpp>
 #include "Mesh.h"
 #include "Util.h"
 
 
 void Mesh::push() {
 
-    material.useProgram();
 
     float *flatVertices = &vertices[0].x;
     float *flatColors = &colors[0].x;
@@ -49,6 +46,9 @@ void Mesh::push() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
 
     uniformMvpPosition = glGetUniformLocation(material.getProgram(), "MVP");
+    uniformMPosition = glGetUniformLocation(material.getProgram(), "M");
+    uniformCameraPosition = glGetUniformLocation(material.getProgram(), "cameraPos");
+    uniformMNormalPosition = glGetUniformLocation(material.getProgram(), "MNor");
 }
 
 Mesh::Mesh(Material material)
@@ -84,6 +84,7 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
 }
 
 void Mesh::draw() {
+    material.useProgram();
     if (isIndexed()) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
@@ -97,7 +98,7 @@ void Mesh::draw() {
 glm::mat4x4 Mesh::getModelMatrix() {
     double time = glfwGetTime();
     glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(3.f, 3.f, 3.f));
-    glm::mat4 r = glm::rotate(glm::mat4(1.0), (float) time / 10.f, glm::vec3(1, -1, 1));
+    glm::mat4 r = glm::rotate(glm::mat4(1.0), (float) time / 5.f, glm::vec3(0, -1, 0));
     return glm::mat4(1.0) * r * s;
 }
 
@@ -108,7 +109,6 @@ GLuint Mesh::getMVPLocation() const {
 Material &Mesh::getMaterial() {
     return material;
 }
-
 
 bool Mesh::isIndexed() {
     return !indices.empty();
@@ -126,8 +126,8 @@ void Mesh::computeNormals() {
         auto b = vertices[i1];
         auto c = vertices[i2];
 
-        auto ba = b - a;
-        auto ca = c - a;
+        auto ba = a - c;
+        auto ca = a - b;
 
         auto normal = cross(ca, ba);
         normal = normalize(normal);
@@ -255,3 +255,21 @@ void Mesh::readFromFile(const std::string &filepath) {
     }
 
 }
+
+GLuint Mesh::getMLocation() const {
+    return uniformMPosition;
+}
+
+GLuint Mesh::getCameraLocation() const {
+    return uniformCameraPosition;
+}
+
+glm::mat4x4 Mesh::getNormalModelMatrix() {
+    auto m = getModelMatrix();
+    return determinant(m) * transpose(inverse(m));
+}
+
+GLuint Mesh::getMNormalLocation() const {
+    return uniformMNormalPosition;
+}
+
