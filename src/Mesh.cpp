@@ -1,8 +1,8 @@
 //
 // Created by Christoph Vögele on 21/03/2021.
 //
+#pragma once
 
-#include <glad/gl.h>
 #include <memory>
 #include <iostream>
 #include <example-utils.hpp>
@@ -40,6 +40,13 @@ void Mesh::push() {
     glEnableVertexAttribArray(normalPosition);
     glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    glGenBuffers(1, &texCoordBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, texCoordBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 3, flatNormals, GL_STATIC_DRAW);
+    GLuint texCoordPosition = glGetAttribLocation(material.getProgram(), "vTexCoord");
+    glEnableVertexAttribArray(texCoordPosition);
+    glVertexAttribPointer(texCoordPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -55,12 +62,9 @@ Mesh::Mesh(Material material)
           colors(std::vector<glm::vec3>()),
           indices(std::vector<int>()),
           normals(std::vector<glm::vec3>()),
-          material(material),
-          uniformMvpPosition(0),
-          indexBuffer(0),
-          vertexBuffer(0),
-          colorBuffer(0),
-          normalBuffer(0) {
+          texCoords(std::vector<glm::vec3>()),
+          material(material)
+          {
 }
 
 Mesh::Mesh(Material material, const std::string &path) : material(material),
@@ -68,17 +72,15 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          colors(std::vector<glm::vec3>()),
                                                          normals(std::vector<glm::vec3>()),
                                                          indices(std::vector<int>()),
-                                                         uniformMvpPosition(0),
-                                                         indexBuffer(0),
-                                                         vertexBuffer(0),
-                                                         colorBuffer(0),
-                                                         normalBuffer(0) {
+                                                         texCoords(std::vector<glm::vec3>())
+                                                         {
 
     readFromFile(path);
 
     for (int i = 0; i < vertices.size(); ++i) {
         colors.emplace_back(1.f, 0.f, 0.f);
     }
+
     computeNormals();
 }
 
@@ -106,17 +108,7 @@ glm::mat4x4 Mesh::getModelMatrix() {
     return glm::mat4(1.0) * rx * ry * rz * s;
 }
 
-GLuint Mesh::getMVPLocation() const {
-    return uniformMvpPosition;
-}
 
-Material &Mesh::getMaterial() {
-    return material;
-}
-
-bool Mesh::isIndexed() {
-    return !indices.empty();
-}
 
 void Mesh::computeNormals() {
 
@@ -258,22 +250,5 @@ void Mesh::readFromFile(const std::string &filepath) {
         std::cerr << "Caught tinyply exception: " << e.what() << std::endl;
     }
 
-}
-
-GLuint Mesh::getMLocation() const {
-    return uniformMPosition;
-}
-
-GLuint Mesh::getCameraLocation() const {
-    return uniformCameraPosition;
-}
-
-glm::mat4x4 Mesh::getNormalModelMatrix() {
-    auto m = getModelMatrix();
-    return determinant(m) * transpose(inverse(m));
-}
-
-GLuint Mesh::getMNormalLocation() const {
-    return uniformMNormalPosition;
 }
 

@@ -5,7 +5,6 @@
 #ifndef TEST_MATERIAL_H
 #define TEST_MATERIAL_H
 
-
 #include "Shader.h"
 
 class Material {

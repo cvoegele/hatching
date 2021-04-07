@@ -5,10 +5,8 @@
 #ifndef TEST_MESH_H
 #define TEST_MESH_H
 
-
-#include <vector>
-#include <glm/mat4x4.hpp>
 #include "Material.h"
+#include "Texture.h"
 
 class Mesh {
 public:
@@ -20,24 +18,30 @@ public:
 
     glm::mat4x4 getModelMatrix();
 
-    glm::mat4x4 getNormalModelMatrix();
+    glm::mat4x4 getNormalModelMatrix() { return determinant(getModelMatrix()) * transpose(inverse(getModelMatrix())); };
 
-    GLuint getMVPLocation() const;
+    GLuint getMVPLocation() const { return uniformMvpPosition; };
 
-    GLuint getMLocation() const;
+    GLuint getMLocation() const { return uniformMPosition; };
 
-    GLuint getMNormalLocation() const;
+    GLuint getMNormalLocation() const { return uniformMNormalPosition; };
 
-    GLuint getCameraLocation() const;
+    GLuint getCameraLocation() const { return uniformCameraPosition; };
 
-    Material &getMaterial();
+    Material &getMaterial() { return material; };
+
+    void setTexture(Texture texture) {
+        this->texture = texture;
+        textured = true;
+    };
+
+    bool isTextured() { return textured; }
 
 private:
-    bool isIndexed();
+    bool isIndexed() { return !indices.empty(); };
 
     void readFromFile(const std::string &path);
 
-    std::vector<glm::vec3> normals;
     GLuint uniformMvpPosition;
     GLuint uniformMPosition;
     GLuint uniformCameraPosition;
@@ -46,13 +50,18 @@ private:
     GLuint colorBuffer;
     GLuint indexBuffer;
     GLuint normalBuffer;
+    GLuint texCoordBuffer;
+    bool textured = false;
 
 protected:
     explicit Mesh(Material material);
 
     Material material;
+    Texture texture;
+    std::vector<glm::vec3> normals;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> colors;
+    std::vector<glm::vec3> texCoords;
     std::vector<int> indices;
 
     void computeNormals();

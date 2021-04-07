@@ -5,7 +5,6 @@
 #ifndef HATCHING_CAMERA_H
 #define HATCHING_CAMERA_H
 
-
 #include <glm/glm.hpp>
 
 class Camera {

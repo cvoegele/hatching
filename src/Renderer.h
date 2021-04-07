@@ -5,7 +5,6 @@
 #ifndef TEST_RENDERER_H
 #define TEST_RENDERER_H
 
-
 #include <vector>
 #include "Mesh.h"
 #include "Camera.h"

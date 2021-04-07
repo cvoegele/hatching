@@ -1,17 +1,10 @@
-#include <glad/gl.h>
+#pragma once
 
-#include <GLFW/glfw3.h>
-
-#include <glm/matrix.hpp>
 #include <iostream>
-#include "src/Shader.h"
-#include "src/Material.h"
-#include "src/Mesh.h"
 #include "src/Renderer.h"
 #include "src/Cube.h"
 
 int main() {
-
 
     Renderer renderer(640 * 2, 480 * 2);
 

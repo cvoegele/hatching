@@ -3,6 +3,7 @@
 in vec3 vPos;
 in vec3 vCol;
 in vec3 vNor;
+in vec3 vTexCoord;
 
 uniform mat4 MVP;
 uniform mat4 M;

@@ -6,8 +6,7 @@
 #include "glm/ext.hpp"
 #include <iostream>
 #include <imgui/imgui.h>
-#include <imgui_glfw/imgui_impl_glfw.h>
-#include <imgui_glfw/imgui_impl_opengl3.h>
+#include <GLFW/glfw3.h>
 #include "Renderer.h"
 
 static void error_callback(int error, const char *description) {
