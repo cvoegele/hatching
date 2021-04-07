@@ -4,7 +4,6 @@
 
 #include <glad/gl.h>
 #include "glm/ext.hpp"
-#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include <imgui/imgui.h>
 #include <imgui_glfw/imgui_impl_glfw.h>
@@ -59,14 +58,14 @@ void Renderer::setup() {
     gladLoadGL(glfwGetProcAddress);
     glfwSwapInterval(1);
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    // Setup Platform/Renderer bindings
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 400 core");
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
+//    IMGUI_CHECKVERSION();
+//    ImGui::CreateContext();
+//    ImGuiIO &io = ImGui::GetIO();
+//    // Setup Platform/Renderer bindings
+//    ImGui_ImplGlfw_InitForOpenGL(window, true);
+//    ImGui_ImplOpenGL3_Init("#version 400 core");
+//    // Setup Dear ImGui style
+//    ImGui::StyleColorsDark();
 }
 
 void Renderer::startRenderLoop() {
@@ -77,10 +76,9 @@ void Renderer::startRenderLoop() {
         glViewport(0, 0, targetWidth, targetHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
+//        ImGui_ImplOpenGL3_NewFrame();
+//        ImGui_ImplGlfw_NewFrame();
+//        ImGui::NewFrame();
 
         if (recompileShaders) {
             for (auto mesh : meshes) {
@@ -108,26 +106,25 @@ void Renderer::startRenderLoop() {
             mesh.draw();
         }
 
-        ImGui::Begin("Demo window");
-        ImGui::Button("Hello!");
-        ImGui::End();
+//        ImGui::Begin("Demo window");
+//        ImGui::Button("Hello!");
+//        ImGui::End();
+//
+//        ImGui::Render();
+//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
+//        int display_w, display_h;
+//        glfwGetFramebufferSize(window, &display_w, &display_h);
+//        glViewport(0, 0, display_w, display_h);
         glfwSwapBuffers(window);
 
     }
 
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+//    ImGui_ImplOpenGL3_Shutdown();
+//    ImGui_ImplGlfw_Shutdown();
+//    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
-
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }
