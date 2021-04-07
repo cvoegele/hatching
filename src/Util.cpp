@@ -3,13 +3,8 @@
 //
 
 #include "Util.h"
-#include "example-utils.hpp"
-#include "Mesh.h"
-#include <tinyply.h>
 #include <fstream>
 #include <vector>
-#include <iostream>
-#include <glm/vec3.hpp>
 
 std::string Util::readFile2(const std::string &fileName) {
     constexpr auto read_size = std::size_t{4096};

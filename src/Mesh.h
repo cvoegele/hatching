@@ -7,8 +7,10 @@
 
 
 #include <vector>
+#include <memory>
 #include <glm/mat4x4.hpp>
 #include "Material.h"
+#include "Texture.h"
 
 class Mesh {
 public:
@@ -32,6 +34,8 @@ public:
 
     Material &getMaterial();
 
+    void setTexture(Texture &texture) { this->m_texture = std::make_shared<Texture>(texture); };
+
 private:
     bool isIndexed();
 
@@ -46,6 +50,7 @@ private:
     GLuint colorBuffer;
     GLuint indexBuffer;
     GLuint normalBuffer;
+    std::shared_ptr<Texture> m_texture;
 
 protected:
     explicit Mesh(Material material);

@@ -81,7 +81,7 @@ void Renderer::startRenderLoop() {
 //        ImGui::NewFrame();
 
         if (recompileShaders) {
-            for (auto mesh : meshes) {
+            for (auto& mesh : meshes) {
                 mesh.getMaterial().reloadMaterial();
                 mesh.push();
             }
@@ -89,11 +89,11 @@ void Renderer::startRenderLoop() {
 
         }
 
-        for (auto feature : enabledGLFeatures) {
+        for (auto& feature : enabledGLFeatures) {
             glEnable(feature);
         }
 
-        for (auto mesh : meshes) {
+        for (auto& mesh : meshes) {
             mesh.getMaterial().useProgram();
 
             auto meshModelMatrix = mesh.getModelMatrix();

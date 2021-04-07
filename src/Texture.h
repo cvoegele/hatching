@@ -5,7 +5,7 @@
 #ifndef HATCHING_TEXTURE_H
 #define HATCHING_TEXTURE_H
 
-#include <glad/gl.h>
+#include "commonincludes.h"
 #include "Image.h"
 
 class Texture {

@@ -2,7 +2,7 @@
 // Created by Christoph Vögele on 16/03/2021.
 //
 
-#include <glad/gl.h>
+#include "commonincludes.h"
 #include "Shader.h"
 #include "Util.h"
 

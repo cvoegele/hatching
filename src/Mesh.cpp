@@ -2,7 +2,7 @@
 // Created by Christoph Vögele on 21/03/2021.
 //
 
-#include <glad/gl.h>
+#include "commonincludes.h"
 #include <memory>
 #include <iostream>
 #include <example-utils.hpp>
@@ -60,7 +60,8 @@ Mesh::Mesh(Material material)
           indexBuffer(0),
           vertexBuffer(0),
           colorBuffer(0),
-          normalBuffer(0) {
+          normalBuffer(0)
+          {
 }
 
 Mesh::Mesh(Material material, const std::string &path) : material(material),
@@ -72,7 +73,8 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          indexBuffer(0),
                                                          vertexBuffer(0),
                                                          colorBuffer(0),
-                                                         normalBuffer(0) {
+                                                         normalBuffer(0)
+                                                         {
 
     readFromFile(path);
 
