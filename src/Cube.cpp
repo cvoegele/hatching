@@ -119,6 +119,63 @@ Cube::Cube(Material material) : Mesh(material) {
         colors.push_back(color);
     }
 
+    float textureCoordinates[12*3*3] =
+            {
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f, //15
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    1.f, 1.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+                    0.f, 1.f, 0.f,
+                    0.f, 0.f, 0.f,
+                    1.f, 0.f, 0.f,
+
+            };
+
+    for (int i = 0; i < 36 * 3; i += 3) {
+        glm::vec3 texCoordinate(textureCoordinates[i], textureCoordinates[i + 1], textureCoordinates[i + 2]);
+        texCoords.push_back(texCoordinate);
+    }
+
     int vertexIndices[12 * 3] = {
             0, 2, 1,
             3, 4, 5,

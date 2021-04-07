@@ -5,12 +5,13 @@
 #ifndef HATCHING_TEXTURE_H
 #define HATCHING_TEXTURE_H
 
+#include <string>
 #include "commonincludes.h"
-#include "Image.h"
 
 class Texture {
 public:
-    Texture(Image image);
+    Texture(std::string imagePath);
+
     Texture();
 
     ~Texture();
@@ -23,7 +24,7 @@ public:
 
 private:
     GLuint textureBuffer;
-    Image m_image;
+    std::string imagePath;
 };
 
 

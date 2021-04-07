@@ -38,11 +38,16 @@ int main() {
 //    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
 //    plyMesh.push();
 
-    Texture texture(Image("../data/image/dirt.png"));
+    Texture texture( "../data/image/dirt.png");
     texture.setup();
 
     Cube cubus(material);
     cubus.push();
+
+    cubus.setTexture(texture);
+
+
+    std::cout << cubus.isTextured() << std::endl;
 
     renderer.addMesh(cubus);
     renderer.startRenderLoop();

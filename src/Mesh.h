@@ -32,32 +32,42 @@ public:
 
     GLuint getCameraLocation() const;
 
+    GLuint getIsTexturedLocation() const { return uniformIsTextured; };
+
+    GLuint getTextureBuffer() const { return texCoordinateBuffer; };
+
     Material &getMaterial();
 
     void setTexture(Texture &texture) { this->m_texture = std::make_shared<Texture>(texture); };
+
+    bool isTextured() { return !(m_texture.get() == nullptr); }
 
 private:
     bool isIndexed();
 
     void readFromFile(const std::string &path);
 
-    std::vector<glm::vec3> normals;
+
     GLuint uniformMvpPosition;
     GLuint uniformMPosition;
     GLuint uniformCameraPosition;
     GLuint uniformMNormalPosition;
+    GLuint uniformIsTextured;
     GLuint vertexBuffer;
     GLuint colorBuffer;
     GLuint indexBuffer;
     GLuint normalBuffer;
+    GLuint texCoordinateBuffer;
     std::shared_ptr<Texture> m_texture;
 
 protected:
     explicit Mesh(Material material);
 
     Material material;
+    std::vector<glm::vec3> normals;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> colors;
+    std::vector<glm::vec3> texCoords;
     std::vector<int> indices;
 
     void computeNormals();

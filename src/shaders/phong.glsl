@@ -5,8 +5,11 @@ out vec4 colour;
 in vec3 worldPos;
 in vec4 color;
 in vec3 normal;
+in vec2 texCoord;
 
 uniform vec3 cameraPos;
+uniform sampler2D bob;
+uniform int isTex;
 
 //Declaration
 vec4 lambertDiffuse(vec3 n, vec3 lightToPoint);
@@ -14,14 +17,18 @@ vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint);
 
 void main()
 {
+    if (isTex == 1) {
+        colour =  texture(bob, texCoord);
+        //colour = vec4(texCoord, 0.0, 1.0);
+    } else {
 
-    vec3 lightPosition = vec3(-10, 50, -10);
-    vec3 lightToPoint = normalize(lightPosition - worldPos);
-    vec3 n = normalize(normal);
-    vec3 eyeToPoint = normalize(cameraPos - worldPos);
+        vec3 lightPosition = vec3(-10, 50, -10);
+        vec3 lightToPoint = normalize(lightPosition - worldPos);
+        vec3 n = normalize(normal);
+        vec3 eyeToPoint = normalize(cameraPos - worldPos);
 
-    colour = lambertDiffuse(n, lightToPoint) + specular(n, lightToPoint, eyeToPoint);
-
+        colour = lambertDiffuse(n, lightToPoint) + specular(n, lightToPoint, eyeToPoint);
+    }
 }
 
 //Definition

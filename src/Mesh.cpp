@@ -8,15 +8,17 @@
 #include <example-utils.hpp>
 #include <tinyply.h>
 #include <glm/ext.hpp>
+#include <stb_image.h>
 #include "Mesh.h"
 #include "Util.h"
 
-
+GLuint textureBuffer;
 void Mesh::push() {
 
     float *flatVertices = &vertices[0].x;
     float *flatColors = &colors[0].x;
     float *flatNormals = &normals[0].x;
+    float *flatTexCoords = &texCoords[0].x;
 
     //save as member, all glGen- Calls
     glGenBuffers(1, &vertexBuffer);
@@ -40,6 +42,13 @@ void Mesh::push() {
     glEnableVertexAttribArray(normalPosition);
     glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    glGenBuffers(1, &texCoordinateBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, texCoordinateBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 3, flatTexCoords, GL_STATIC_DRAW);
+    GLuint texCoordPosition = glGetAttribLocation(material.getProgram(), "vTexCoord");
+    glEnableVertexAttribArray(texCoordPosition);
+    glVertexAttribPointer(texCoordPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -48,13 +57,37 @@ void Mesh::push() {
     uniformMPosition = glGetUniformLocation(material.getProgram(), "M");
     uniformCameraPosition = glGetUniformLocation(material.getProgram(), "cameraPos");
     uniformMNormalPosition = glGetUniformLocation(material.getProgram(), "MNor");
+    uniformIsTextured = glGetUniformLocation(material.getProgram(), "isTex");
+
+//    int sx, sy, n;
+//
+//    auto data = stbi_load("../data/image/dirt.png", &sx, &sy, &n, STBI_rgb);
+//
+//    int m_width = sx;
+//    int m_height = sy;
+//    int m_channels = n;
+
+
+//    glGenTextures(1, &textureBuffer);
+//    glBindTexture(GL_TEXTURE_2D, textureBuffer);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_width,m_height , 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+//    glGenerateMipmap(GL_TEXTURE_2D);
+
 }
+
+
 
 Mesh::Mesh(Material material)
         : vertices(std::vector<glm::vec3>()),
           colors(std::vector<glm::vec3>()),
           indices(std::vector<int>()),
           normals(std::vector<glm::vec3>()),
+          texCoords(std::vector<glm::vec3>()),
           material(material),
           uniformMvpPosition(0),
           indexBuffer(0),
@@ -68,6 +101,7 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          vertices(std::vector<glm::vec3>()),
                                                          colors(std::vector<glm::vec3>()),
                                                          normals(std::vector<glm::vec3>()),
+                                                         texCoords(std::vector<glm::vec3>()),
                                                          indices(std::vector<int>()),
                                                          uniformMvpPosition(0),
                                                          indexBuffer(0),
@@ -85,6 +119,21 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
 }
 
 void Mesh::draw() {
+
+//    glUniform1i(getIsTexturedLocation(), 1);
+//    //glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, textureBuffer);
+
+
+//    if(isTextured()) {
+        glUniform1i(getIsTexturedLocation(), 1);
+//        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, m_texture->getTextureBuffer());
+//        auto textureLocation = glGetAttribLocation(material.getProgram(), "bob");
+//        glUniform1i(textureLocation, 0);
+//    } else {
+//        glUniform1i(getIsTexturedLocation(), 0);
+//    }
 
     if (isIndexed()) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
