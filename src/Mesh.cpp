@@ -14,7 +14,6 @@
 
 void Mesh::push() {
 
-
     float *flatVertices = &vertices[0].x;
     float *flatColors = &colors[0].x;
     float *flatNormals = &normals[0].x;
@@ -84,22 +83,27 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
 }
 
 void Mesh::draw() {
-    material.useProgram();
+
     if (isIndexed()) {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_ZERO);
     } else {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+        glBindBuffer(GL_ARRAY_BUFFER, GL_ZERO);
     }
+
 
 }
 
 glm::mat4x4 Mesh::getModelMatrix() {
     double time = glfwGetTime();
-    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(3.f, 3.f, 3.f));
-    glm::mat4 r = glm::rotate(glm::mat4(1.0), (float) time / 5.f, glm::vec3(0, -1, 0));
-    return glm::mat4(1.0) * r * s;
+    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(1.f, 1.f, 1.f));
+    glm::mat4 rx = glm::rotate(glm::mat4(1.0), (float) time / 0.7f, glm::vec3(1, 0, 0));
+    glm::mat4 ry = glm::rotate(glm::mat4(1.0), (float) time / 1.2f, glm::vec3(0, 1, 0));
+    glm::mat4 rz = glm::rotate(glm::mat4(1.0), (float) time / 0.9f, glm::vec3(0, 0, 1));
+    return glm::mat4(1.0) * rx * ry * rz * s;
 }
 
 GLuint Mesh::getMVPLocation() const {

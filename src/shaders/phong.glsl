@@ -38,7 +38,7 @@ vec4 lambertDiffuse(vec3 n, vec3 lightToPoint) {
 
 vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint) {
     vec3 r = ((dot(lightToPoint, n) * 2) * n) - lightToPoint;
-    float k = 1.0;
+    float k = 10.0;
     float rr = dot(normalize(r), eyeToPoint);
     vec3 specular = vec3(1, 1, 1) * pow(rr, k);
 

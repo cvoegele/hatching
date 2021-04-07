@@ -36,15 +36,14 @@ int main() {
     Shader fragmentShader("../src/shaders/phong.glsl", false);
 
     Material material(vertexShader, fragmentShader);
-////    Mesh mesh(material);
-//
-////    mesh.push();
-    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
-    plyMesh.push();
-//    Cube cubus(material);
-//    cubus.push();
 
-    renderer.addMesh(plyMesh);
+//    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
+//    plyMesh.push();
+
+    Cube cubus(material);
+    cubus.push();
+
+    renderer.addMesh(cubus);
     renderer.startRenderLoop();
 
 }

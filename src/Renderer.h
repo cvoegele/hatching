@@ -35,6 +35,7 @@ private:
     int targetWidth;
     int targetHeight;
     std::vector<int> enabledGLFeatures;
+    float* clear_color;
 };
 
 

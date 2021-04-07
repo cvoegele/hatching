@@ -6,6 +6,9 @@
 #include "glm/ext.hpp"
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
+#include <imgui/imgui.h>
+#include <imgui_glfw/imgui_impl_glfw.h>
+#include <imgui_glfw/imgui_impl_opengl3.h>
 #include "Renderer.h"
 
 static void error_callback(int error, const char *description) {
@@ -24,6 +27,8 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
     }
 }
 
+bool show_demo_window = true;
+bool show_another_window = false;
 
 Renderer::Renderer(int targetWidth, int targetHeight) :
         meshes(std::vector<Mesh>()),
@@ -53,10 +58,29 @@ void Renderer::setup() {
     glfwMakeContextCurrent(window);
     gladLoadGL(glfwGetProcAddress);
     glfwSwapInterval(1);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    // Setup Platform/Renderer bindings
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 400 core");
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
 }
 
 void Renderer::startRenderLoop() {
     while (!glfwWindowShouldClose(window)) {
+
+        glfwPollEvents();
+        glClearColor(1.f, 0.82f, .84f, 1.f);
+        glViewport(0, 0, targetWidth, targetHeight);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
 
         if (recompileShaders) {
             for (auto mesh : meshes) {
@@ -66,10 +90,6 @@ void Renderer::startRenderLoop() {
             recompileShaders = false;
 
         }
-
-        glClearColor(1.f, 0.82f, .84f, 1.f);
-        glViewport(0, 0, targetWidth, targetHeight);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         for (auto feature : enabledGLFeatures) {
             glEnable(feature);
@@ -88,9 +108,23 @@ void Renderer::startRenderLoop() {
             mesh.draw();
         }
 
+        ImGui::Begin("Demo window");
+        ImGui::Button("Hello!");
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
         glfwSwapBuffers(window);
-        glfwPollEvents();
+
     }
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
 
