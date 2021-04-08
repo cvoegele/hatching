@@ -37,7 +37,7 @@ int main() {
 //    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
 //    plyMesh.push();
 
-    Texture texture( "../data/image/dirt.png");
+    Texture texture( "../data/image/tree.png");
     texture.setup();
 
     Texture texture1( "../data/image/dirt.png");
