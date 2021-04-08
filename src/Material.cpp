@@ -6,14 +6,13 @@
 #include "Material.h"
 
 Material::Material(Shader &vertexShader, Shader &fragmentShader) : fragmentShader(fragmentShader) , vertexShader(vertexShader), program(0) {
-    createProgram();
 }
 
 void Material::createProgram() {
     program = glCreateProgram();
     glAttachShader(program, vertexShader.getShader());
     glAttachShader(program, fragmentShader.getShader());
-    glLinkProgram(program);
+
 }
 
 void Material::useProgram() const {
@@ -34,5 +33,9 @@ void Material::reloadMaterial() {
 
 Material::Material() : vertexShader(Shader(true)), fragmentShader(Shader(false)), program(0) {
     createProgram();
+}
+
+void Material::linkProgram() {
+    glLinkProgram(program);
 }
 

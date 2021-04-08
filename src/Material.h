@@ -15,6 +15,8 @@ public:
 
     void createProgram();
 
+    void linkProgram();
+
     void useProgram() const;
 
     GLuint getProgram() const;

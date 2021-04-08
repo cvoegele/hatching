@@ -20,7 +20,6 @@ int main() {
                   glm::vec3(0, 0, 0),
                   glm::vec3(0, 2, 2.f));
 
-    std::cout << camera.getCameraPosition().z << std::endl;
 
     renderer.setCamera(camera);
 
@@ -41,13 +40,14 @@ int main() {
     Texture texture( "../data/image/dirt.png");
     texture.setup();
 
+    Texture texture1( "../data/image/dirt.png");
+    texture.setup();
+
     Cube cubus(material);
     cubus.push();
 
     cubus.setTexture(texture);
-
-
-    std::cout << cubus.isTextured() << std::endl;
+    cubus.setTexture(texture1);
 
     renderer.addMesh(cubus);
     renderer.startRenderLoop();

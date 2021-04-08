@@ -142,8 +142,8 @@ Cube::Cube(Material material) : Mesh(material) {
                     1.f, 0.f, 0.f,
 
                     0.f, 1.f, 0.f, //15
-                    0.f, 0.f, 0.f,
                     1.f, 0.f, 0.f,
+                    0.f, 0.f, 0.f,
 
                     0.f, 1.f, 0.f,
                     1.f, 1.f, 0.f,

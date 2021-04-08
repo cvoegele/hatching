@@ -8,7 +8,10 @@ in vec3 normal;
 in vec2 texCoord;
 
 uniform vec3 cameraPos;
-uniform sampler2D bob;
+
+uniform sampler2D texture0;
+uniform sampler2D texture1;
+
 uniform int isTex;
 
 //Declaration
@@ -18,7 +21,7 @@ vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint);
 void main()
 {
     if (isTex == 1) {
-        colour =  texture(bob, texCoord);
+        colour =  texture(texture1, texCoord);
         //colour = vec4(texCoord, 0.0, 1.0);
     } else {
 

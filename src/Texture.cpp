@@ -3,6 +3,7 @@
 //
 
 #include <stb_image.h>
+#include <iostream>
 #include "Texture.h"
 
 Texture::Texture(std::string imagePath) : imagePath(imagePath) {

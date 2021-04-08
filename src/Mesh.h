@@ -38,9 +38,9 @@ public:
 
     Material &getMaterial();
 
-    void setTexture(Texture &texture) { this->m_texture = std::make_shared<Texture>(texture); };
+    void setTexture(Texture &texture) { m_textures.push_back(std::make_shared<Texture>(texture)); };
 
-    bool isTextured() { return !(m_texture.get() == nullptr); }
+    bool isTextured() { return (m_textures.size() > 0); }
 
 private:
     bool isIndexed();
@@ -58,10 +58,11 @@ private:
     GLuint indexBuffer;
     GLuint normalBuffer;
     GLuint texCoordinateBuffer;
-    std::shared_ptr<Texture> m_texture;
+    std::vector<std::shared_ptr<Texture>> m_textures;
 
 protected:
     explicit Mesh(Material material);
+
 
     Material material;
     std::vector<glm::vec3> normals;
