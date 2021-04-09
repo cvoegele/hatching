@@ -11,7 +11,7 @@ uniform sampler2D texture0;
 
 void main() {
 
-    vec4 newT = -(vec4(worldPos, 1.0) - vec4(1,1,0.0,0.0)) / 2.0;
+    vec2 uv = (-(vec4(worldPos, 1.0) - vec4(1,1,0.0,0.0)) / 2.0).xy;
 
-    colour = texture(texture0, newT.xy);
+    colour = texture(texture0, uv);
 }

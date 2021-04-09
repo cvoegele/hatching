@@ -28,7 +28,7 @@ int main() {
     Screen screen(material1);
     screen.push();
 
-    Texture texture("../data/image/tree.png");
+    Texture texture("../data/image/fire.png");
     texture.setup();
     screen.setTexture(texture);
 

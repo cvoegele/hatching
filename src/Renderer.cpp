@@ -104,8 +104,6 @@ void Renderer::startRenderLoop() {
             glUniformMatrix4fv(mesh.getMNormalLocation(), 1, GL_FALSE, &mesh.getNormalModelMatrix()[0][0]);
             glUniform3fv(mesh.getCameraLocation(), 1, &camera.getCameraPosition()[0]);
 
-
-
             mesh.draw();
         }
 
