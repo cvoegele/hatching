@@ -8,6 +8,7 @@
 #include <imgui/imgui.h>
 #include <imgui_glfw/imgui_impl_glfw.h>
 #include <imgui_glfw/imgui_impl_opengl3.h>
+#include <glm/gtx/string_cast.hpp>
 #include "Renderer.h"
 
 static void error_callback(int error, const char *description) {

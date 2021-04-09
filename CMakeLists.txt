@@ -44,6 +44,6 @@ file(GLOB_RECURSE SRC_src
 source_group(external   FILES ${SRC_external})
 source_group(src   FILES ${SRC_src})
 
-add_executable(${MY_PROJECT_NAME} ${SRC_external} ${SRC_src} main.cpp src/Shader.cpp src/Shader.h src/Material.cpp src/Material.h src/Util.cpp src/Util.h src/Mesh.cpp src/Mesh.h src/Renderer.cpp src/Renderer.h src/Camera.cpp src/Camera.h src/Cube.cpp src/Cube.h src/commonincludes.h)
+add_executable(${MY_PROJECT_NAME} ${SRC_external} ${SRC_src} main.cpp src/Shader.cpp src/Shader.h src/Material.cpp src/Material.h src/Util.cpp src/Util.h src/Mesh.cpp src/Mesh.h src/Renderer.cpp src/Renderer.h src/Camera.cpp src/Camera.h src/Cube.cpp src/Cube.h src/commonincludes.h src/Screen.cpp src/Screen.h)
 
 target_link_libraries(${MY_PROJECT_NAME} ${GLFW_LIB_NAME} ${ADDITIONAL_LIBS})

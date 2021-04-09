@@ -17,10 +17,9 @@ GLuint textureBuffer;
 
 void Mesh::push() {
 
-    float *flatVertices = &vertices[0].x;
-    float *flatColors = &colors[0].x;
-    float *flatNormals = &normals[0].x;
-    float *flatTexCoords = &texCoords[0].x;
+
+
+
 
     //Does this do anything????
     material.createProgram();
@@ -30,35 +29,45 @@ void Mesh::push() {
     glBindAttribLocation(material.getProgram(), 3, "vTexCoord");
     material.linkProgram();
 
-    //save as member, all glGen- Calls
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 3, flatVertices, GL_STATIC_DRAW);
-    GLuint verticesPosition = glGetAttribLocation(material.getProgram(), "vPos");
-    glEnableVertexAttribArray(verticesPosition);
-    glVertexAttribPointer(verticesPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    if (!vertices.empty()) {
+        float *flatVertices = &vertices[0].x;
+        //save as member, all glGen- Calls
+        glGenBuffers(1, &vertexBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size() * 3, flatVertices, GL_STATIC_DRAW);
+        GLuint verticesPosition = glGetAttribLocation(material.getProgram(), "vPos");
+        glEnableVertexAttribArray(verticesPosition);
+        glVertexAttribPointer(verticesPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    }
 
-    glGenBuffers(1, &colorBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * colors.size() * 3, flatColors, GL_STATIC_DRAW);
-    GLuint colorPosition = glGetAttribLocation(material.getProgram(), "vCol");
-    glEnableVertexAttribArray(colorPosition);
-    glVertexAttribPointer(colorPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    if (!colors.empty()) {
+        float *flatColors = &colors[0].x;
+        glGenBuffers(1, &colorBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * colors.size() * 3, flatColors, GL_STATIC_DRAW);
+        GLuint colorPosition = glGetAttribLocation(material.getProgram(), "vCol");
+        glEnableVertexAttribArray(colorPosition);
+        glVertexAttribPointer(colorPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    }
 
-    glGenBuffers(1, &normalBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size() * 3, flatNormals, GL_STATIC_DRAW);
-    GLuint normalPosition = glGetAttribLocation(material.getProgram(), "vNor");
-    glEnableVertexAttribArray(normalPosition);
-    glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    glGenBuffers(1, &texCoordinateBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, texCoordinateBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 3, flatTexCoords, GL_STATIC_DRAW);
-    GLuint texCoordPosition = glGetAttribLocation(material.getProgram(), "vTexCoord");
-    glEnableVertexAttribArray(texCoordPosition);
-    glVertexAttribPointer(texCoordPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
+    if (!normals.empty()) {
+        float *flatNormals = &normals[0].x;
+        glGenBuffers(1, &normalBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * normals.size() * 3, flatNormals, GL_STATIC_DRAW);
+        GLuint normalPosition = glGetAttribLocation(material.getProgram(), "vNor");
+        glEnableVertexAttribArray(normalPosition);
+        glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    }
+    if (!texCoords.empty()) {
+        float *flatTexCoords = &texCoords[0].x;
+        glGenBuffers(1, &texCoordinateBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, texCoordinateBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * texCoords.size() * 3, flatTexCoords, GL_STATIC_DRAW);
+        GLuint texCoordPosition = glGetAttribLocation(material.getProgram(), "vTexCoord");
+        glEnableVertexAttribArray(texCoordPosition);
+        glVertexAttribPointer(texCoordPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    }
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -145,12 +154,13 @@ void Mesh::draw() {
 }
 
 glm::mat4x4 Mesh::getModelMatrix() {
-    double time = glfwGetTime();
-    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(1.f, 1.f, 1.f));
-    glm::mat4 rx = glm::rotate(glm::mat4(1.0), (float) time / 0.7f, glm::vec3(1, 0, 0));
-    glm::mat4 ry = glm::rotate(glm::mat4(1.0), (float) time / 1.2f, glm::vec3(0, 1, 0));
-    glm::mat4 rz = glm::rotate(glm::mat4(1.0), (float) time / 0.9f, glm::vec3(0, 0, 1));
-    return glm::mat4(1.0) * rx * ry * rz * s;
+//    double time = glfwGetTime();
+//    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(1.f, 1.f, 1.f));
+//    glm::mat4 rx = glm::rotate(glm::mat4(1.0), (float) time / 0.7f, glm::vec3(1, 0, 0));
+//    glm::mat4 ry = glm::rotate(glm::mat4(1.0), (float) time / 1.2f, glm::vec3(0, 1, 0));
+//    glm::mat4 rz = glm::rotate(glm::mat4(1.0), (float) time / 0.9f, glm::vec3(0, 0, 1));
+//    return glm::mat4(1.0) * rx * ry * rz * s;
+return glm::mat4(1.0);
 }
 
 GLuint Mesh::getMVPLocation() const {
