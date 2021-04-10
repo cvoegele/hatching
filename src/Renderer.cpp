@@ -72,6 +72,19 @@ void Renderer::setup() {
 void Renderer::startRenderLoop() {
     while (!glfwWindowShouldClose(window)) {
 
+        if (recompileShaders) {
+            for (auto& mesh : meshes) {
+                mesh.getMaterial().reloadMaterial();
+                mesh.push();
+            }
+            recompileShaders = false;
+            renderPass->recompileShaders();
+        }
+
+        renderPass->preRender();
+        renderPass->render();
+        renderPass->afterRender();
+
         glfwPollEvents();
         glClearColor(1.f, 0.82f, .84f, 1.f);
         glViewport(0, 0, targetWidth, targetHeight);
@@ -81,14 +94,7 @@ void Renderer::startRenderLoop() {
 //        ImGui_ImplGlfw_NewFrame();
 //        ImGui::NewFrame();
 
-        if (recompileShaders) {
-            for (auto& mesh : meshes) {
-                mesh.getMaterial().reloadMaterial();
-                mesh.push();
-            }
-            recompileShaders = false;
 
-        }
 
         for (auto& feature : enabledGLFeatures) {
             glEnable(feature);

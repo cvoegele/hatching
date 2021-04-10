@@ -13,13 +13,10 @@
 #include "Mesh.h"
 #include "Util.h"
 
-GLuint textureBuffer;
-
 void Mesh::push() {
 
-
-
-
+    glGenVertexArrays(1, &vaoVertexArray);
+    glBindVertexArray(vaoVertexArray);
 
     //Does this do anything????
     material.createProgram();
@@ -59,6 +56,7 @@ void Mesh::push() {
         glEnableVertexAttribArray(normalPosition);
         glVertexAttribPointer(normalPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     }
+
     if (!texCoords.empty()) {
         float *flatTexCoords = &texCoords[0].x;
         glGenBuffers(1, &texCoordinateBuffer);
@@ -68,6 +66,7 @@ void Mesh::push() {
         glEnableVertexAttribArray(texCoordPosition);
         glVertexAttribPointer(texCoordPosition, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     }
+
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -77,6 +76,7 @@ void Mesh::push() {
     uniformCameraPosition = glGetUniformLocation(material.getProgram(), "cameraPos");
     uniformMNormalPosition = glGetUniformLocation(material.getProgram(), "MNor");
     uniformIsTextured = glGetUniformLocation(material.getProgram(), "isTex");
+
 }
 
 Mesh::Mesh(Material material)
@@ -141,9 +141,10 @@ void Mesh::draw() {
     }
 
     if (isIndexed()) {
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+        glBindVertexArray(vaoVertexArray);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
         glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_ZERO);
     } else {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
@@ -154,13 +155,7 @@ void Mesh::draw() {
 }
 
 glm::mat4x4 Mesh::getModelMatrix() {
-//    double time = glfwGetTime();
-//    glm::mat4 s = glm::scale(glm::mat4(1.0), glm::vec3(1.f, 1.f, 1.f));
-//    glm::mat4 rx = glm::rotate(glm::mat4(1.0), (float) time / 0.7f, glm::vec3(1, 0, 0));
-//    glm::mat4 ry = glm::rotate(glm::mat4(1.0), (float) time / 1.2f, glm::vec3(0, 1, 0));
-//    glm::mat4 rz = glm::rotate(glm::mat4(1.0), (float) time / 0.9f, glm::vec3(0, 0, 1));
-//    return glm::mat4(1.0) * rx * ry * rz * s;
-return glm::mat4(1.0);
+    return translateMatrix * rotateMatrix * scaleMatrix;
 }
 
 GLuint Mesh::getMVPLocation() const {
@@ -333,4 +328,18 @@ glm::mat4x4 Mesh::getNormalModelMatrix() {
 GLuint Mesh::getMNormalLocation() const {
     return uniformMNormalPosition;
 }
+
+
+void Mesh::setRotation(glm::vec3 axis, float value) {
+    rotateMatrix = glm::rotate(glm::mat4(1.0), value, axis);
+}
+
+void Mesh::setTranslate(glm::vec3 translate) {
+    translateMatrix = glm::translate(glm::mat4(1.0), translate);
+}
+
+void Mesh::setScale(glm::vec3 scale) {
+    scaleMatrix = glm::scale(glm::mat4(1.0), scale);
+}
+
 

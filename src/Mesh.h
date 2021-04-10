@@ -42,12 +42,28 @@ public:
 
     bool isTextured() { return (m_textures.size() > 0); }
 
+    void setRotation(glm::vec3 axis, float value);
+
+    void setTranslate(glm::vec3 rotation);
+
+    void setScale(glm::vec3 scale);
+
+    void setRotationX(float value);
+
+    void setRotationY(float value);
+
+    void setRotationZ(float value);
+
 private:
     bool isIndexed();
 
     void readFromFile(const std::string &path);
 
+    glm::mat4 getRotationX();
+    glm::mat4 getRotationY();
+    glm::mat4 getRotationZ();
 
+    glm::mat4 modelMatrix = glm::mat4(1.0);
     GLuint uniformMvpPosition;
     GLuint uniformMPosition;
     GLuint uniformCameraPosition;
@@ -58,7 +74,15 @@ private:
     GLuint indexBuffer;
     GLuint normalBuffer;
     GLuint texCoordinateBuffer;
+    GLuint vaoVertexArray;
     std::vector<std::shared_ptr<Texture>> m_textures;
+    bool isRotating = false;
+    glm::mat4 translateMatrix = glm::mat4(1.0);
+    glm::mat4 rotateMatrix = glm::mat4(1.0);
+    glm::mat4 scaleMatrix = glm::mat4(1.0);
+    float rotationX;
+    float rotationY;
+    float rotationZ;
 
 protected:
     explicit Mesh(Material material);

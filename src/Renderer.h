@@ -9,6 +9,7 @@
 #include <vector>
 #include "Mesh.h"
 #include "Camera.h"
+#include "RenderPass.h"
 
 class Renderer {
 public:
@@ -28,6 +29,8 @@ public:
 
     void setCamera(Camera& camera);
 
+    std::shared_ptr<RenderPass> renderPass;
+
 private:
     std::vector<Mesh> meshes;
     Camera camera;
@@ -36,6 +39,7 @@ private:
     int targetHeight;
     std::vector<int> enabledGLFeatures;
     float* clear_color;
+
 };
 
 

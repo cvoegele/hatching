@@ -11,11 +11,41 @@
 
 int main() {
 
+
     Renderer renderer1(640, 480);
 
     Camera camera1;
     renderer1.setCamera(camera1);
     renderer1.setup();
+
+    RenderPass renderPass(640, 480);
+
+    Camera renderPassCamera(45.f,
+                            renderPass.getAspectRatio(),
+                            0.1f,
+                            1000.f,
+                            glm::vec3(0, 0, 0),
+                            glm::vec3(0, 2, 5.f));
+
+    renderPass.setCamera(renderPassCamera);
+    renderPass.setup();
+
+    Shader vertexShader("../src/shaders/vertex.glsl", true);
+    Shader fragmentShader("../src/shaders/phong.glsl", false);
+
+    Material material(vertexShader, fragmentShader);
+
+//    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
+//    plyMesh.push();
+
+    Cube cub0(material);
+    cub0.push();
+    //cub0.setRotation(glm::vec3(1,0,0), 0);
+
+    renderPass.addMesh(cub0);
+
+    renderer1.renderPass = std::make_shared<RenderPass>(renderPass);
+
     renderer1.disableGLFeature(GL_CULL_FACE);
     glDepthFunc(GL_LESS);
     renderer1.enableGLFeature(GL_DEPTH_TEST);
@@ -28,15 +58,10 @@ int main() {
     Screen screen(material1);
     screen.push();
 
-    Texture texture("../data/image/fire.png");
-    texture.setup();
-    screen.setTexture(texture);
-
 //    Cube cube(material1);
 //    cube.push();
 
     renderer1.addMesh(screen);
-
     renderer1.startRenderLoop();
 
 //    Renderer renderer(640 * 2, 480 * 2);
@@ -47,9 +72,6 @@ int main() {
 //                  1000.f,
 //                  glm::vec3(0, 0, 0),
 //                  glm::vec3(0, 2, 5.f));
-//
-//
-//
 //
 //    renderer.setCamera(camera);
 //
@@ -64,8 +86,8 @@ int main() {
 //
 //    Material material(vertexShader, fragmentShader);
 //
-////    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
-////    plyMesh.push();
+//    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
+//    plyMesh.push();
 //
 ////    Texture texture( "../data/image/tree.png");
 ////    texture.setup();
@@ -75,11 +97,14 @@ int main() {
 //
 //    Cube cubus(material);
 //    cubus.push();
+//    cubus.setTranslate(glm::vec3(1,1,0));
 //
 ////    cubus.setTexture(texture);
 ////    cubus.setTexture(texture1);
 //
+//    renderer.addMesh(plyMesh);
 //    renderer.addMesh(cubus);
+//
 //    renderer.startRenderLoop();
 
 }
