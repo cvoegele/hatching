@@ -40,6 +40,9 @@ int main() {
 
     Cube cub0(material);
     cub0.push();
+    cub0.setRotationX(0.7f);
+    cub0.setRotationY(0.8f);
+    cub0.setRotationZ(0.3f);
     //cub0.setRotation(glm::vec3(1,0,0), 0);
 
     renderPass.addMesh(cub0);

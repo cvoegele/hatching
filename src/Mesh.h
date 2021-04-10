@@ -48,11 +48,11 @@ public:
 
     void setScale(glm::vec3 scale);
 
-    void setRotationX(float value);
+    void setRotationX(float value) { rotationX = value; };
 
-    void setRotationY(float value);
+    void setRotationY(float value) { rotationY = value; };
 
-    void setRotationZ(float value);
+    void setRotationZ(float value) { rotationZ = value; };
 
 private:
     bool isIndexed();
@@ -60,7 +60,9 @@ private:
     void readFromFile(const std::string &path);
 
     glm::mat4 getRotationX();
+
     glm::mat4 getRotationY();
+
     glm::mat4 getRotationZ();
 
     glm::mat4 modelMatrix = glm::mat4(1.0);
@@ -80,9 +82,9 @@ private:
     glm::mat4 translateMatrix = glm::mat4(1.0);
     glm::mat4 rotateMatrix = glm::mat4(1.0);
     glm::mat4 scaleMatrix = glm::mat4(1.0);
-    float rotationX;
-    float rotationY;
-    float rotationZ;
+    float rotationX = 0.f;
+    float rotationY = 0.f;
+    float rotationZ = 0.f;
 
 protected:
     explicit Mesh(Material material);

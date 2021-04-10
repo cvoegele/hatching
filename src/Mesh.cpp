@@ -155,7 +155,7 @@ void Mesh::draw() {
 }
 
 glm::mat4x4 Mesh::getModelMatrix() {
-    return translateMatrix * rotateMatrix * scaleMatrix;
+    return translateMatrix * rotateMatrix * scaleMatrix * getRotationX() * getRotationY() * getRotationZ();
 }
 
 GLuint Mesh::getMVPLocation() const {
@@ -340,6 +340,25 @@ void Mesh::setTranslate(glm::vec3 translate) {
 
 void Mesh::setScale(glm::vec3 scale) {
     scaleMatrix = glm::scale(glm::mat4(1.0), scale);
+}
+
+glm::mat4 Mesh::getRotationX() {
+    if (rotationX == 0) return glm::mat4(1.0);
+    float time = glfwGetTime();
+    return glm::rotate(glm::mat4(1.0), (float) time / rotationX, glm::vec3(1, 0, 0));
+}
+
+glm::mat4 Mesh::getRotationY() {
+    if (rotationY == 0) return glm::mat4(1.0);
+    float time = glfwGetTime();
+    return glm::rotate(glm::mat4(1.0), (float) time / rotationY, glm::vec3(0, 1, 0));
+}
+
+
+glm::mat4 Mesh::getRotationZ() {
+    if (rotationZ == 0) return glm::mat4(1.0);
+    float time = glfwGetTime();
+    return glm::rotate(glm::mat4(1.0), (float) time / rotationZ, glm::vec3(0, 0, 1));
 }
 
 
