@@ -76,6 +76,8 @@ void Mesh::push() {
     uniformCameraPosition = glGetUniformLocation(material.getProgram(), "cameraPos");
     uniformMNormalPosition = glGetUniformLocation(material.getProgram(), "MNor");
     uniformIsTextured = glGetUniformLocation(material.getProgram(), "isTex");
+    uniformWidthPosition = glGetUniformLocation(material.getProgram(), "width");
+    uniformHeightPosition = glGetUniformLocation(material.getProgram(), "height");
 
 }
 
@@ -360,5 +362,9 @@ glm::mat4 Mesh::getRotationZ() {
     float time = glfwGetTime();
     return glm::rotate(glm::mat4(1.0), (float) time / rotationZ, glm::vec3(0, 0, 1));
 }
+
+
+
+
 
 

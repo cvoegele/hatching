@@ -44,16 +44,18 @@ void RenderPass::render() {
         glEnable(feature);
     }
 
+
     for (auto &mesh : meshes) {
         mesh.getMaterial().useProgram();
 
-        mesh.setRotation(glm::vec3(1, 0,0), 0.3f);
         auto meshModelMatrix = mesh.getModelMatrix();
         glUniformMatrix4fv(mesh.getMVPLocation(), 1, GL_FALSE,
                            &camera.projectModelMatrix(meshModelMatrix)[0][0]);
         glUniformMatrix4fv(mesh.getMLocation(), 1, GL_FALSE, &meshModelMatrix[0][0]);
         glUniformMatrix4fv(mesh.getMNormalLocation(), 1, GL_FALSE, &mesh.getNormalModelMatrix()[0][0]);
         glUniform3fv(mesh.getCameraLocation(), 1, &camera.getCameraPosition()[0]);
+        glUniform1f(mesh.getHeightLocation(), height);
+        glUniform1f(mesh.getWidthLocation(), width);
 
         mesh.draw();
     }

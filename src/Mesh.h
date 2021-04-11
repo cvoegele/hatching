@@ -11,6 +11,7 @@
 #include <glm/mat4x4.hpp>
 #include "Material.h"
 #include "Texture.h"
+#include "Camera.h"
 
 class Mesh {
 public:
@@ -31,6 +32,9 @@ public:
     GLuint getMNormalLocation() const;
 
     GLuint getCameraLocation() const;
+
+    GLuint getWidthLocation() const { return uniformWidthPosition; };
+    GLuint getHeightLocation() const { return uniformHeightPosition; };
 
     GLuint getIsTexturedLocation() const { return uniformIsTextured; };
 
@@ -77,6 +81,8 @@ private:
     GLuint normalBuffer;
     GLuint texCoordinateBuffer;
     GLuint vaoVertexArray;
+    GLuint uniformWidthPosition;
+    GLuint uniformHeightPosition;
     std::vector<std::shared_ptr<Texture>> m_textures;
     bool isRotating = false;
     glm::mat4 translateMatrix = glm::mat4(1.0);

@@ -11,7 +11,6 @@
 
 int main() {
 
-
     Renderer renderer1(640, 480);
 
     Camera camera1;
@@ -20,34 +19,32 @@ int main() {
 
     RenderPass renderPass(640, 480);
 
-    Camera renderPassCamera(45.f,
-                            renderPass.getAspectRatio(),
-                            0.1f,
-                            1000.f,
-                            glm::vec3(0, 0, 0),
-                            glm::vec3(0, 2, 5.f));
+    Camera renderPassCamera;
 
     renderPass.setCamera(renderPassCamera);
     renderPass.setup();
 
     Shader vertexShader("../src/shaders/vertex.glsl", true);
-    Shader fragmentShader("../src/shaders/phong.glsl", false);
+    Shader fragmentShader("../src/shaders/raymarching.glsl", false);
 
     Material material(vertexShader, fragmentShader);
 
 //    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
 //    plyMesh.push();
 
-    Cube cub0(material);
-    cub0.push();
-    cub0.setRotationX(0.7f);
-    cub0.setRotationY(0.8f);
-    cub0.setRotationZ(0.3f);
-    //cub0.setRotation(glm::vec3(1,0,0), 0);
+    Screen screen1(material);
+    screen1.push();
 
-    renderPass.addMesh(cub0);
+//    Cube cub0(material);
+//    cub0.push();
+//    cub0.setRotationX(0.7f);
+//    cub0.setRotationY(0.8f);
+//    cub0.setRotationZ(0.3f);
+
+    renderPass.addMesh(screen1);
 
     renderer1.renderPass = std::make_shared<RenderPass>(renderPass);
+
 
     renderer1.disableGLFeature(GL_CULL_FACE);
     glDepthFunc(GL_LESS);
