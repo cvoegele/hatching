@@ -111,33 +111,12 @@ void Mesh::draw() {
 
     int unit = 0;
     if (isTextured()) {
-
-        //for (auto &texture : m_textures) {
-
-        glUniform1i(getIsTexturedLocation(), 1);
-
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_textures[0]->getTextureBuffer());
-
-//        std::string unitString = std::to_string(0);
-//        std::string textureIdentifierString = "texture";
-//        textureIdentifierString += unitString;
-
-        auto textureLocation = glGetUniformLocation(material.getProgram(), "texture0");
-        glUniform1i(textureLocation, 0);
-
-//        //glUniform1i(getIsTexturedLocation(), 1);
-//        glActiveTexture(GL_TEXTURE1);
-//        glBindTexture(GL_TEXTURE_2D, m_textures[1]->getTextureBuffer());
-//
-////        std::string unitString1 = std::to_string(1);
-////        std::string textureIdentifierString1 = "texture";
-////        textureIdentifierString1 += unitString;
-//
-//        auto textureLocation1 = glGetUniformLocation(material.getProgram(), "texture1");
-//        glUniform1i(textureLocation1, 1);
-        //}
+        for (auto &texture : m_textures) {
+            glUniform1i(getIsTexturedLocation(), 1);
+            glActiveTexture(GL_TEXTURE0 + unit);
+            glBindTexture(GL_TEXTURE_2D, texture->getTextureBuffer());
+            unit++;
+        }
     } else {
         glUniform1i(getIsTexturedLocation(), 0);
     }

@@ -1,4 +1,4 @@
-#version 400 core
+#version 420 core
 
 out vec4 colour;
 
@@ -9,8 +9,10 @@ in vec2 texCoord;
 
 uniform vec3 cameraPos;
 
-uniform sampler2D texture0;
-uniform sampler2D texture1;
+layout (binding = 0) uniform sampler2D texture0;
+layout (binding = 1) uniform sampler2D texture1;
+//uniform sampler2D texture0;
+//uniform sampler2D texture1;
 
 uniform int isTex;
 
@@ -21,7 +23,7 @@ vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint);
 void main()
 {
     if (isTex == 1) {
-        colour =  texture(texture1, texCoord);
+        colour =  texture(texture1, texCoord) * texture(texture0, texCoord);
         //colour = vec4(texCoord, 0.0, 1.0);
     } else {
 

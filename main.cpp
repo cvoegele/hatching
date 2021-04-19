@@ -17,31 +17,51 @@ int main() {
     renderer1.setCamera(camera1);
     renderer1.setup();
 
+        GLint units = 0;
+    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &units);
+    std::cout << units << std::endl;
+
     RenderPass renderPass(640, 480);
 
-    Camera renderPassCamera;
+    ///Camera renderPassCamera;
+    Camera camera(45.f,
+                  renderPass.getAspectRatio(),
+                  0.1f,
+                  1000.f,
+                  glm::vec3(0, 0, 0),
+                  glm::vec3(0, 0, 0.5f));
 
-    renderPass.setCamera(renderPassCamera);
+    renderPass.setCamera(camera);
     renderPass.setup();
 
     Shader vertexShader("../src/shaders/vertex.glsl", true);
-    Shader fragmentShader("../src/shaders/raymarching.glsl", false);
+    Shader fragmentShader("../src/shaders/phong.glsl", false);
 
     Material material(vertexShader, fragmentShader);
 
-//    Mesh plyMesh(material, "../data/ply/happy_vrip.ply");
-//    plyMesh.push();
+    Mesh plyMesh(material, "../data/ply/bun_zipper.ply");
+    plyMesh.push();
+    plyMesh.setRotationX(0.7f);
 
-    Screen screen1(material);
-    screen1.push();
+//    Screen screen1(material);
+//    screen1.push();
 
 //    Cube cub0(material);
 //    cub0.push();
 //    cub0.setRotationX(0.7f);
 //    cub0.setRotationY(0.8f);
-//    cub0.setRotationZ(0.3f);
+//    cub0.setRotationZ(0.8f);
+//
+//    Texture texture("../data/image/dirt.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/tree.png");
+//    texture1.setup();
 
-    renderPass.addMesh(screen1);
+//    cub0.setTexture(texture);
+//    cub0.setTexture(texture1);
+
+    renderPass.addMesh(plyMesh);
 
     renderer1.renderPass = std::make_shared<RenderPass>(renderPass);
 

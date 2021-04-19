@@ -44,7 +44,6 @@ void RenderPass::render() {
         glEnable(feature);
     }
 
-
     for (auto &mesh : meshes) {
         mesh.getMaterial().useProgram();
 

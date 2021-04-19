@@ -2,6 +2,7 @@
 // Created by Christoph Vögele on 16/03/2021.
 //
 
+#include <iostream>
 #include "commonincludes.h"
 #include "Shader.h"
 #include "Util.h"
@@ -26,7 +27,7 @@ static const char *fragment_shader_text =
         "    gl_FragColor = vec4(color, 1.0);\n"
         "}\n";
 
-Shader::Shader(std::string path, bool vertex) : shader(0) , path(path), source("") {
+Shader::Shader(std::string path, bool vertex) : shader(0), path(path), source("") {
     type = vertex ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER;
     shader = glCreateShader(type);
     compile();
@@ -37,6 +38,18 @@ void Shader::compile() {
     source = s.c_str();
     glShaderSource(shader, 1, &source, nullptr);
     glCompileShader(shader);
+
+    GLint isCompiled = 0;
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+
+    if (isCompiled == GL_FALSE) {
+        int maxLength;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        std::string s(errorLog.begin(), errorLog.end());
+        std::cerr << (type ? "Vertex" : "Fragment") << " : " << s << std::endl;
+    }
 }
 
 Shader::Shader(bool vertex) {

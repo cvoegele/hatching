@@ -34,6 +34,7 @@ public:
     GLuint getCameraLocation() const;
 
     GLuint getWidthLocation() const { return uniformWidthPosition; };
+
     GLuint getHeightLocation() const { return uniformHeightPosition; };
 
     GLuint getIsTexturedLocation() const { return uniformIsTextured; };
