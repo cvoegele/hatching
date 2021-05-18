@@ -44,6 +44,6 @@ file(GLOB_RECURSE SRC_src
 source_group(external   FILES ${SRC_external})
 source_group(src   FILES ${SRC_src})
 
-add_executable(${MY_PROJECT_NAME} ${SRC_external} ${SRC_src} main.cpp src/Sphere.cpp src/Sphere.h)
+add_executable(${MY_PROJECT_NAME} ${SRC_external} ${SRC_src} main.cpp src/Sphere.cpp src/Sphere.h src/ObjMesh.cpp src/ObjMesh.h)
 
 target_link_libraries(${MY_PROJECT_NAME} ${GLFW_LIB_NAME} ${ADDITIONAL_LIBS})

@@ -9,6 +9,7 @@
 #include "src/Cube.h"
 #include "src/Screen.h"
 #include "src/Sphere.h"
+#include "src/ObjMesh.h"
 
 int main() {
 
@@ -46,7 +47,7 @@ int main() {
 
 
     RenderPass renderPass(1020, 720, 2);
-    renderPass.disableGLFeature(GL_DEPTH_TEST);
+    renderPass.enableGLFeature(GL_DEPTH_TEST);
     renderPass.enableGLFeature(GL_CULL_FACE);
     renderPass.enableGLFeature(GL_BLEND);
     ///Camera renderPassCamera;
@@ -54,31 +55,32 @@ int main() {
                   renderPass.getAspectRatio(),
                   0.1f,
                   1000.f,
-                  glm::vec3(0, 0, 0),
-                  glm::vec3(0, 0, 5.f));
+                  glm::vec3(0, 0.1f, 0),
+                  glm::vec3(0, 0.2f, 0.3f));
 
     renderPass.setCamera(camera);
     renderPass.setup();
 
-    Shader vertexShader("../src/shaders/vertex.glsl", true);
+    Shader vertexShader("../src/shaders/vertexScaledTextures.glsl", true);
     Shader fragmentShader("../src/shaders/hatching0.glsl", false);
 
     Material material(vertexShader, fragmentShader);
 
-//    Mesh cub0(material, "../data/ply/bun_zipper.ply");
+    ObjMesh mesh(material, "../data/obj/bunny_tex.obj");
+    //Mesh mesh(material, "../data/ply/bun_zipper.ply");
 
-//    cub0.push();
-//    cub0.setRotationX(0.7f);
+//    mesh.push();
+//    mesh.setRotationX(0.7f);
 
 //    Screen screen1(material);
 //    screen1.push();
 
-    Sphere cub0(material);
-//    Cube cub0(material);
-    cub0.push();
-    cub0.setRotationX(2.f);
-    cub0.setRotationY(2.f);
-    cub0.setRotationZ(2.f);
+//    Sphere mesh(material);
+//    Cube mesh(material);
+    mesh.push();
+//    mesh.setRotationX(2.f);
+    mesh.setRotationY(2.f);
+//    mesh.setRotationZ(2.f);
 
     Texture texture("../data/image/tiled/layer0.png");
     texture.setup();
@@ -95,13 +97,13 @@ int main() {
     Texture texture4("../data/image/tiled/layer4.png");
     texture4.setup();
 
-    cub0.addTexture(texture,3);
-    cub0.addTexture(texture1, 4);
-    cub0.addTexture(texture2, 5);
-    cub0.addTexture(texture3, 6);
-    cub0.addTexture(texture4, 7);
+    mesh.addTexture(texture, 3);
+    mesh.addTexture(texture1, 4);
+    mesh.addTexture(texture2, 5);
+    mesh.addTexture(texture3, 6);
+    mesh.addTexture(texture4, 7);
 
-    renderPass.addMesh(cub0);
+    renderPass.addMesh(mesh);
 
     renderer1.pushRenderPass(renderPass);
 
@@ -145,8 +147,8 @@ int main() {
 //
 //    Material material(vertexShader, fragmentShader);
 //
-//    Mesh cub0(material, "../data/ply/bun_zipper.ply");
-//    cub0.push();
+//    Mesh mesh(material, "../data/ply/bun_zipper.ply");
+//    mesh.push();
 //
 ////    Texture texture( "../data/image/tree.png");
 ////    texture.setup();
@@ -161,7 +163,7 @@ int main() {
 ////    cubus.addTexture(texture);
 ////    cubus.addTexture(texture1);
 //
-//    renderer.addMesh(cub0);
+//    renderer.addMesh(mesh);
 //    renderer.addMesh(cubus);
 //
 //    renderer.startRenderLoop();
