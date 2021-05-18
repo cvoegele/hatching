@@ -43,7 +43,10 @@ public:
 
     Material &getMaterial();
 
-    void setTexture(Texture &texture) { m_textures.push_back(std::make_shared<Texture>(texture)); };
+    void addTexture(Texture &texture, int textureLayout) {
+        m_textures.push_back(std::make_shared<Texture>(texture));
+        m_texturesLayout.push_back(std::make_shared<int>(textureLayout));
+    };
 
     bool isTextured() { return (m_textures.size() > 0); }
 
@@ -85,6 +88,7 @@ private:
     GLuint uniformWidthPosition;
     GLuint uniformHeightPosition;
     std::vector<std::shared_ptr<Texture>> m_textures;
+    std::vector<std::shared_ptr<int>> m_texturesLayout;
     bool isRotating = false;
     glm::mat4 translateMatrix = glm::mat4(1.0);
     glm::mat4 rotateMatrix = glm::mat4(1.0);

@@ -29,7 +29,14 @@ public:
 
     void setCamera(Camera& camera);
 
-    std::shared_ptr<RenderPass> renderPass;
+    void pushRenderPass(RenderPass& renderPass1) {
+        renderPasses.push_back(std::make_shared<RenderPass>(renderPass1));
+    }
+
+    void popRenderPass() {
+        renderPasses.pop_back();
+    }
+
 
 private:
     std::vector<Mesh> meshes;
@@ -39,6 +46,7 @@ private:
     int targetHeight;
     std::vector<int> enabledGLFeatures;
     float* clear_color;
+    std::vector<std::shared_ptr<RenderPass>> renderPasses;
 
 };
 

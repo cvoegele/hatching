@@ -11,8 +11,8 @@ Screen::Screen(Material material) : Mesh(material) {
     vertices.push_back(glm::vec3(1, -1, 0));
 
     vertices.push_back(glm::vec3(-1, 1, 0));
-    vertices.push_back(glm::vec3(-1, -1, 0));
     vertices.push_back(glm::vec3(1, -1, 0));
+    vertices.push_back(glm::vec3(-1, -1, 0));
 
     texCoords.push_back(glm::vec3(0, 0, 0));
 

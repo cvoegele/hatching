@@ -13,10 +13,13 @@ out vec3 color;
 out vec3 normal;
 out vec3 worldPos;
 out vec2 texCoord;
+out vec2 screenPos;
 
 void main()
 {
-    gl_Position = MVP * vec4(vPos, 1.0);
+    vec4 projected = MVP * vec4(vPos, 1.0);
+    screenPos = projected.xy;
+    gl_Position = projected;
     color = vCol;
     worldPos = (M * vec4(vPos, 1.0)).xyz;
     normal = ((MNor) * vec4(vNor, 1.0)).xyz;

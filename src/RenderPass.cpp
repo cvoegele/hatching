@@ -5,8 +5,8 @@
 #include "RenderPass.h"
 
 
-RenderPass::RenderPass(int width, int height) : width(width), height(height), meshes(std::vector<Mesh>()),
-                                                enabledGLFeatures(std::vector<int>()) {
+RenderPass::RenderPass(int width, int height, int textureLayout) : width(width), height(height), meshes(std::vector<Mesh>()),
+                                                enabledGLFeatures(std::vector<int>()), textureLayout(textureLayout) {
 
 }
 
@@ -38,7 +38,8 @@ void RenderPass::render() {
 
     glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1.f, 0, 0, 1.f);
+    glClearColor(1.f, 1.0f, 1, 1.f);
+    glDepthMask(GL_TRUE);
 
     for (auto &feature : enabledGLFeatures) {
         glEnable(feature);
@@ -61,7 +62,7 @@ void RenderPass::render() {
 }
 
 void RenderPass::afterRender() {
-    glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0 + textureLayout);
     glBindTexture(GL_TEXTURE_2D, renderTextureBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

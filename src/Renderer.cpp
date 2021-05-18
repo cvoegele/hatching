@@ -35,7 +35,9 @@ Renderer::Renderer(int targetWidth, int targetHeight) :
         window(nullptr),
         targetHeight(targetHeight),
         targetWidth(targetWidth),
-        enabledGLFeatures(std::vector<int>()), camera(Camera()) {
+        enabledGLFeatures(std::vector<int>()),
+        camera(Camera()),
+        renderPasses(std::vector<std::shared_ptr<RenderPass>>()) {
 }
 
 void Renderer::setup() {
@@ -73,20 +75,27 @@ void Renderer::startRenderLoop() {
     while (!glfwWindowShouldClose(window)) {
 
         if (recompileShaders) {
-            for (auto& mesh : meshes) {
+            for (auto &mesh : meshes) {
                 mesh.getMaterial().reloadMaterial();
                 mesh.push();
             }
             recompileShaders = false;
-            renderPass->recompileShaders();
+            for (auto &renderPass : renderPasses) {
+                renderPass->recompileShaders();
+            }
+
         }
 
-        renderPass->preRender();
-        renderPass->render();
-        renderPass->afterRender();
+        for (auto &renderPass : renderPasses) {
+            renderPass->preRender();
+            renderPass->render();
+            renderPass->afterRender();
+        }
+
 
         glfwPollEvents();
-        glClearColor(1.f, 0.82f, .84f, 1.f);
+        //glClearColor(1.f, 0.82f, .84f, 1.f); //hot pink
+        glClearColor(1.f, 1.f, 1.f, 1.f);
         glViewport(0, 0, targetWidth, targetHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -96,11 +105,11 @@ void Renderer::startRenderLoop() {
 
 
 
-        for (auto& feature : enabledGLFeatures) {
+        for (auto &feature : enabledGLFeatures) {
             glEnable(feature);
         }
 
-        for (auto& mesh : meshes) {
+        for (auto &mesh : meshes) {
             mesh.getMaterial().useProgram();
 
             auto meshModelMatrix = mesh.getModelMatrix();

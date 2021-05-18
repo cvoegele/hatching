@@ -88,6 +88,7 @@ Mesh::Mesh(Material material)
           normals(std::vector<glm::vec3>()),
           texCoords(std::vector<glm::vec3>()),
           m_textures(std::vector<std::shared_ptr<Texture>>()),
+          m_texturesLayout(std::vector<std::shared_ptr<int>>()),
           material(material) {
 }
 
@@ -97,7 +98,8 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          normals(std::vector<glm::vec3>()),
                                                          texCoords(std::vector<glm::vec3>()),
                                                          indices(std::vector<int>()),
-                                                         m_textures(std::vector<std::shared_ptr<Texture>>()) {
+                                                         m_textures(std::vector<std::shared_ptr<Texture>>()),
+                                                         m_texturesLayout(std::vector<std::shared_ptr<int>>()){
 
     readFromFile(path);
 
@@ -105,18 +107,29 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
         colors.emplace_back(1.f, 0.f, 0.f);
     }
     computeNormals();
+
+    texCoords.clear();
+    for (auto& vertex : vertices) {
+        auto normal = glm::normalize(vertex);
+        auto texCoordinate = glm::vec3(normal.x, normal.y, 0);
+        normals.push_back(normal);
+        texCoords.push_back(texCoordinate);
+    }
+
 }
 
 void Mesh::draw() {
 
-    int unit = 0;
     if (isTextured()) {
-        for (auto &texture : m_textures) {
-            glUniform1i(getIsTexturedLocation(), 1);
-            glActiveTexture(GL_TEXTURE0 + unit);
+        glUniform1i(getIsTexturedLocation(), 1);
+
+        for (int i = 0; i < m_textures.size(); ++i) {
+            auto& texture = m_textures[i];
+            auto& textureLayout = m_texturesLayout[i];
+            glActiveTexture(GL_TEXTURE0 + *textureLayout);
             glBindTexture(GL_TEXTURE_2D, texture->getTextureBuffer());
-            unit++;
         }
+
     } else {
         glUniform1i(getIsTexturedLocation(), 0);
     }

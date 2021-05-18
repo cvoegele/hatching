@@ -11,7 +11,7 @@
 
 class RenderPass {
 public:
-    RenderPass(int width, int height);
+    RenderPass(int width, int height, int textureLayout);
 
     void recompileShaders();
 
@@ -48,6 +48,7 @@ private:
     GLuint renderTextureBuffer;
     GLuint renderBuffer;
     GLuint frameBuffer;
+    int textureLayout;
 
     std::vector<Mesh> meshes;
     Camera camera;
