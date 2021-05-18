@@ -25,6 +25,11 @@ public:
 private:
     GLuint textureBuffer;
     std::string imagePath;
+
+    GLuint wrapS;
+    GLuint wrapT;
+    GLuint minFilter;
+    GLuint maxFilter;
 };
 
 
