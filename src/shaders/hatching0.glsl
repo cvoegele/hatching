@@ -60,18 +60,9 @@ void main()
 
         colour.xyz = f * (colour.xyz - 0.5) +0.5;
 
-        colour.xyz = colour.xyz * vec3(0,0.5,1);
+        colour.xyz = colour.xyz * vec3(0, 0.5, 1);
 
         colour.a = 1;
-
-        // +  mediumTexture * vec4(1, 1, 1, 0.5);// + darkTexture * vec4(1, 1, 1, 0.8 - brightness) +  reallyDarkTexture * vec4(1, 1, 1, 1 - brightness);
-        //        vec4 lightest = lightTexture * (brightness) * vec4(1.0, 1.0, 1.0, 1.0);
-        //        vec4 darkes = darkTextures * (1 - brightness) + vec4(1.0, 1.0, 1.0, 1.0) * (brightness);
-        //        colour = lightest;
-        //colour = darkTexture * (1 - brightness);
-
-        //colour = clamp(lightTexture * vec4(1, 1, 1, 1 - brightness), 0, 1f);// + mediumTexture + darkTexture + reallyDarkTexture;
-
     }
     else {
         colour = vec4(1.0, 0, 0, 1.0);
