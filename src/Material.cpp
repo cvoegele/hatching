@@ -43,3 +43,9 @@ void Material::linkProgram() {
     glLinkProgram(program);
 }
 
+void Material::ImGui() {
+    for (auto& uniform : uniforms) {
+        uniform->ImGui();
+    }
+}
+

@@ -8,7 +8,8 @@
 RenderPass::RenderPass(int width, int height, int textureLayout) : width(width), height(height),
                                                                    meshes(std::vector<Mesh>()),
                                                                    enabledGLFeatures(std::vector<int>()),
-                                                                   textureLayout(textureLayout) {
+                                                                   textureLayout(textureLayout)
+                                                                  {
 
 }
 
@@ -40,8 +41,7 @@ void RenderPass::render() {
 
     glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(1.f, 1.0f, 1, 1.f);
-    glClearColor(1.f, 0.f, 0, 1.f);
+    glClearColor(clearColor->x, clearColor->y, clearColor->z, clearColor->a);
     glDepthMask(GL_TRUE);
 
     for (auto &feature : enabledGLFeatures) {
@@ -76,6 +76,15 @@ void RenderPass::recompileShaders() {
         mesh.getMaterial().reloadMaterial();
         mesh.push();
     }
+}
+
+void RenderPass::ImGui() {
+    //ImGui::Begin("Renderpass");
+    //ImGui::SliderFloat4("clearColor", &clearColor->x, 0,1);
+    for (auto &mesh: meshes) {
+        mesh.getMaterial().ImGui();
+    }
+
 }
 
 

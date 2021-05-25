@@ -11,7 +11,7 @@
 
 class UniformF : public UniformBase {
 public:
-    UniformF(const std::string &name, float value);
+    UniformF(const std::string &name, float value, float min, float max);
 
     virtual void upload(GLuint programId) override;
 
@@ -19,7 +19,8 @@ public:
 
 private:
     float value;
+    float min;
+    float max;
 };
-
 
 #endif //HATCHING_UNIFORMF_H

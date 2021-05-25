@@ -7,5 +7,6 @@
 
 #include "glad/gl.h"
 #include "GLFW/glfw3.h"
+#include <imgui/imgui.h>
 
 #endif //HATCHING_COMMONINCLUDES_H

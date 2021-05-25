@@ -37,7 +37,8 @@ Renderer::Renderer(int targetWidth, int targetHeight) :
         targetWidth(targetWidth),
         enabledGLFeatures(std::vector<int>()),
         camera(Camera()),
-        renderPasses(std::vector<std::shared_ptr<RenderPass>>()) {
+        renderPasses(std::vector<std::shared_ptr<RenderPass>>()),
+        clearColor(std::make_shared<glm::vec4>(glm::vec4(1))){
 }
 
 void Renderer::setup() {
@@ -61,14 +62,14 @@ void Renderer::setup() {
     gladLoadGL(glfwGetProcAddress);
     glfwSwapInterval(1);
 
-//    IMGUI_CHECKVERSION();
-//    ImGui::CreateContext();
-//    ImGuiIO &io = ImGui::GetIO();
-//    // Setup Platform/Renderer bindings
-//    ImGui_ImplGlfw_InitForOpenGL(window, true);
-//    ImGui_ImplOpenGL3_Init("#version 400 core");
-//    // Setup Dear ImGui style
-//    ImGui::StyleColorsDark();
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    // Setup Platform/Renderer bindings
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 400 core");
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
 }
 
 void Renderer::startRenderLoop() {
@@ -95,13 +96,13 @@ void Renderer::startRenderLoop() {
 
         glfwPollEvents();
         //glClearColor(1.f, 0.82f, .84f, 1.f); //hot pink
-        glClearColor(1.f, 1.f, 1.f, 1.f);
+        glClearColor(clearColor->x, clearColor->y, clearColor->z, clearColor->a);
         glViewport(0, 0, targetWidth, targetHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//        ImGui_ImplOpenGL3_NewFrame();
-//        ImGui_ImplGlfw_NewFrame();
-//        ImGui::NewFrame();
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
 
 
@@ -124,23 +125,27 @@ void Renderer::startRenderLoop() {
             mesh.draw();
         }
 
-//        ImGui::Begin("Demo window");
-//        ImGui::Button("Hello!");
-//        ImGui::End();
-//
-//        ImGui::Render();
-//        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ImGui::Begin("Inspector");
+        //imgui calls
+        ImGui();
+        for (auto &renderpass : renderPasses) {
+            renderpass->ImGui();
+        }
 
-//        int display_w, display_h;
-//        glfwGetFramebufferSize(window, &display_w, &display_h);
-//        glViewport(0, 0, display_w, display_h);
+        ImGui::End();
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
         glfwSwapBuffers(window);
 
     }
 
-//    ImGui_ImplOpenGL3_Shutdown();
-//    ImGui_ImplGlfw_Shutdown();
-//    ImGui::DestroyContext();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwDestroyWindow(window);
     glfwTerminate();
@@ -166,6 +171,15 @@ float Renderer::getAspectRatio() const {
 
 void Renderer::setCamera(Camera &camera) {
     this->camera = camera;
+}
+
+void Renderer::ImGui() {
+
+    ImGui::SliderFloat4("Clear Color", &clearColor->x, 0,1);
+    for (auto &mesh: meshes) {
+        mesh.getMaterial().ImGui();
+    }
+
 }
 
 

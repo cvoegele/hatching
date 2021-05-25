@@ -11,14 +11,16 @@
 
 class UniformI : UniformBase {
 public:
-    UniformI(const std::string &name, GLuint value);
+    UniformI(const std::string &name, int value, int min, int max);
 
     void upload(GLuint programId) override;
 
     void ImGui() override;
 
 private:
-    GLuint value;
+    int value;
+    int min;
+    int max;
 };
 
 

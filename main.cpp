@@ -12,6 +12,7 @@
 #include "src/ObjMesh.h"
 #include "src/UniformI.h"
 #include "src/UniformF.h"
+#include "src/UniformVec3.h"
 
 int main() {
 
@@ -68,10 +69,10 @@ int main() {
 
     Material material(vertexShader, fragmentShader);
 
-    UniformF base = UniformF("contrast",1);
-    //UniformF* f = &base;
-
-    material.addUniform(&base);
+    UniformF contrast = UniformF("contrast", 1, 0,1);
+    UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1,1,1), 0,1);
+    material.addUniform(&contrast);
+    material.addUniform(&multColor);
 
     ObjMesh mesh(material, "../data/obj/bunny_tex.obj");
     //Mesh mesh(material, "../data/ply/bun_zipper.ply");

@@ -30,12 +30,15 @@ public:
     void setCamera(Camera& camera);
 
     void pushRenderPass(RenderPass& renderPass1) {
+        renderPass1.clearColor = clearColor;
         renderPasses.push_back(std::make_shared<RenderPass>(renderPass1));
     }
 
     void popRenderPass() {
         renderPasses.pop_back();
     }
+
+    void ImGui();
 
 
 private:
@@ -45,9 +48,9 @@ private:
     int targetWidth;
     int targetHeight;
     std::vector<int> enabledGLFeatures;
-    float* clear_color;
     std::vector<std::shared_ptr<RenderPass>> renderPasses;
-
+    //glm::vec4 clearColor;
+    std::shared_ptr<glm::vec4> clearColor;
 };
 
 

@@ -25,8 +25,6 @@ public:
 
     void addMesh(const Mesh &mesh) { meshes.push_back(mesh); };
 
-
-
     void enableGLFeature(const int &attribute) { enabledGLFeatures.push_back(attribute); };
 
     void disableGLFeature(const int &attribute) {
@@ -44,6 +42,9 @@ public:
 
     GLuint getFrameBuffer() { return frameBuffer; };
 
+    void ImGui();
+
+    std::shared_ptr<glm::vec4> clearColor;
 private:
     int width;
     int height;
@@ -55,6 +56,8 @@ private:
     std::vector<Mesh> meshes;
     Camera camera;
     std::vector<int> enabledGLFeatures;
+
+
 };
 
 

@@ -10,6 +10,7 @@ in vec2 screenPos;
 
 uniform vec3 cameraPos;
 uniform float contrast;
+uniform vec3 multColor;
 
 layout (binding = 3) uniform sampler2D texture0;
 layout (binding = 4) uniform sampler2D texture1;
@@ -52,14 +53,12 @@ void main()
         + modifiyTextureColor(0.1, brightness, reallyReallyDarkTexture)), 0, 1);
         colour.xyz = vec3(1 - colour.a);
 
-        float f = (contrast + 1) / (contrast - 0.5);
+        float f = (contrast + 1) / (1 - contrast);
 
-        float a = 0.8;
-        float b = 0.0;
+        colour.xyz = clamp(f * (colour.xyz - 0.5) + 0.5, 0,1);
 
-        colour.xyz = f * (colour.xyz - 0.5) +0.5;
 
-        colour.xyz = colour.xyz;// * vec3(0, 0.5, 1);
+        colour.xyz = colour.xyz * multColor;
 
         colour.a = 1;
     }

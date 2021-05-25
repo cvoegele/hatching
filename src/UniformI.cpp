@@ -10,7 +10,9 @@ void UniformI::upload(GLuint programId) {
 }
 
 void UniformI::ImGui() {
-    UniformBase::ImGui();
+    ImGui::SliderInt(name.c_str(), &value, min, max);
 }
 
-UniformI::UniformI(const std::string &name, GLuint value) : UniformBase(name), value(value) {}
+UniformI::UniformI(const std::string &name, int value, int min, int max) : UniformBase(name), value(value), min(min), max(max) {
+
+}
