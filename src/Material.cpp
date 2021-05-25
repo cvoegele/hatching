@@ -5,7 +5,7 @@
 #include <glad/gl.h>
 #include "Material.h"
 
-Material::Material(Shader &vertexShader, Shader &fragmentShader) : fragmentShader(fragmentShader) , vertexShader(vertexShader), program(0) {
+Material::Material(Shader &vertexShader, Shader &fragmentShader) : fragmentShader(fragmentShader) , vertexShader(vertexShader), program(0),  uniforms(std::vector<UniformBase*>()) {
 }
 
 void Material::createProgram() {
@@ -15,8 +15,12 @@ void Material::createProgram() {
 
 }
 
-void Material::useProgram() const {
+void Material::useProgram() {
     glUseProgram(program);
+
+    for (auto& uniform : uniforms) {
+        uniform->upload(getProgram());
+    }
 }
 
 GLuint Material::getProgram() const {

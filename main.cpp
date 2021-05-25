@@ -10,6 +10,8 @@
 #include "src/Screen.h"
 #include "src/Sphere.h"
 #include "src/ObjMesh.h"
+#include "src/UniformI.h"
+#include "src/UniformF.h"
 
 int main() {
 
@@ -65,6 +67,11 @@ int main() {
     Shader fragmentShader("../src/shaders/hatching0.glsl", false);
 
     Material material(vertexShader, fragmentShader);
+
+    UniformF base = UniformF("contrast",1);
+    //UniformF* f = &base;
+
+    material.addUniform(&base);
 
     ObjMesh mesh(material, "../data/obj/bunny_tex.obj");
     //Mesh mesh(material, "../data/ply/bun_zipper.ply");

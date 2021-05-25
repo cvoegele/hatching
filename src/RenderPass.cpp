@@ -5,8 +5,10 @@
 #include "RenderPass.h"
 
 
-RenderPass::RenderPass(int width, int height, int textureLayout) : width(width), height(height), meshes(std::vector<Mesh>()),
-                                                enabledGLFeatures(std::vector<int>()), textureLayout(textureLayout) {
+RenderPass::RenderPass(int width, int height, int textureLayout) : width(width), height(height),
+                                                                   meshes(std::vector<Mesh>()),
+                                                                   enabledGLFeatures(std::vector<int>()),
+                                                                   textureLayout(textureLayout) {
 
 }
 
@@ -58,6 +60,7 @@ void RenderPass::render() {
         glUniform1f(mesh.getHeightLocation(), height);
         glUniform1f(mesh.getWidthLocation(), width);
 
+
         mesh.draw();
     }
 }
@@ -69,7 +72,7 @@ void RenderPass::afterRender() {
 }
 
 void RenderPass::recompileShaders() {
-    for (auto& mesh : meshes) {
+    for (auto &mesh : meshes) {
         mesh.getMaterial().reloadMaterial();
         mesh.push();
     }

@@ -6,7 +6,9 @@
 #define TEST_MATERIAL_H
 
 
+#include <vector>
 #include "Shader.h"
+#include "UniformBase.h"
 
 class Material {
 public:
@@ -17,17 +19,20 @@ public:
 
     void linkProgram();
 
-    void useProgram() const;
+    void useProgram();
 
     GLuint getProgram() const;
 
     void reloadMaterial();
+
+    void addUniform(UniformBase* uniformBase) { uniforms.push_back(uniformBase); }
 
 
 private:
     Shader vertexShader;
     Shader fragmentShader;
     GLuint program;
+    std::vector<UniformBase*> uniforms;
 };
 
 

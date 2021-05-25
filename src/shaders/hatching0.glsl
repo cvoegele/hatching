@@ -9,13 +9,13 @@ in vec2 texCoord;
 in vec2 screenPos;
 
 uniform vec3 cameraPos;
+uniform float contrast;
 
 layout (binding = 3) uniform sampler2D texture0;
 layout (binding = 4) uniform sampler2D texture1;
 layout (binding = 5) uniform sampler2D texture2;
 layout (binding = 6) uniform sampler2D texture3;
 layout (binding = 7) uniform sampler2D texture4;
-
 
 uniform int isTex;
 
@@ -52,15 +52,14 @@ void main()
         + modifiyTextureColor(0.1, brightness, reallyReallyDarkTexture)), 0, 1);
         colour.xyz = vec3(1 - colour.a);
 
-        float c = 0;
-        float f = (c + 1) / (1 - c);
+        float f = (contrast + 1) / (contrast - 0.5);
 
         float a = 0.8;
         float b = 0.0;
 
         colour.xyz = f * (colour.xyz - 0.5) +0.5;
 
-        colour.xyz = colour.xyz * vec3(0, 0.5, 1);
+        colour.xyz = colour.xyz;// * vec3(0, 0.5, 1);
 
         colour.a = 1;
     }

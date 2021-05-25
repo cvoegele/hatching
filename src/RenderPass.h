@@ -25,6 +25,8 @@ public:
 
     void addMesh(const Mesh &mesh) { meshes.push_back(mesh); };
 
+
+
     void enableGLFeature(const int &attribute) { enabledGLFeatures.push_back(attribute); };
 
     void disableGLFeature(const int &attribute) {
