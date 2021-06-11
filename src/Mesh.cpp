@@ -180,7 +180,7 @@ void Mesh::computeNormals() {
         auto ca = a - b;
 
         auto normal = cross(ca, ba);
-        normal = normalize(normal);
+        normal = -normalize(normal);
 
         normals[i0] = normal;
         normals[i1] = normal;

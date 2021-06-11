@@ -8,6 +8,7 @@ in vec3 vTexCoord;
 uniform mat4 MVP;
 uniform mat4 M;
 uniform mat4 MNor;
+uniform float scale;
 
 out vec3 color;
 out vec3 normal;
@@ -23,5 +24,5 @@ void main()
     color = vCol;
     worldPos = (M * vec4(vPos, 1.0)).xyz;
     normal = ((MNor) * vec4(vNor, 1.0)).xyz;
-    texCoord = vTexCoord.xy * 6;
+    texCoord = vTexCoord.xy * scale;
 }

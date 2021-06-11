@@ -11,6 +11,7 @@ in vec2 screenPos;
 uniform vec3 cameraPos;
 uniform float contrast;
 uniform vec3 multColor;
+uniform vec3 lightPos;
 
 layout (binding = 3) uniform sampler2D texture0;
 layout (binding = 4) uniform sampler2D texture1;
@@ -34,7 +35,7 @@ void main()
         vec4 reallyDarkTexture =  texture(texture3, texCoord);
         vec4 reallyReallyDarkTexture =  texture(texture4, texCoord);
 
-        vec3 lightPosition = vec3(5, 5, 2);
+        vec3 lightPosition = lightPos;
         vec3 lightToPoint = normalize(lightPosition - worldPos);
         vec3 n = normalize(normal);
         vec3 eyeToPoint = normalize(cameraPos - worldPos);

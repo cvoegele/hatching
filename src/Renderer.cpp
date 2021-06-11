@@ -179,6 +179,7 @@ void Renderer::ImGui() {
     for (auto &mesh: meshes) {
         mesh.getMaterial().ImGui();
     }
+    camera.ImGui();
 
 }
 

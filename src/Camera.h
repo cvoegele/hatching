@@ -5,7 +5,7 @@
 #ifndef HATCHING_CAMERA_H
 #define HATCHING_CAMERA_H
 
-
+#include "commonincludes.h"
 #include <glm/glm.hpp>
 
 class Camera {
@@ -17,6 +17,8 @@ public:
 
     glm::vec3 getCameraPosition();
 
+    void ImGui();
+
 private:
     float FOV;
     float aspect;
@@ -27,6 +29,7 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 projectionMatrix;
     glm::mat4 viewProjectionMatrix;
+    bool hasProjection;
 };
 
 

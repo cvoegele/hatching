@@ -17,14 +17,12 @@
 int main() {
 
     Renderer renderer1(1020, 720);
-
     Camera camera1;
     renderer1.setCamera(camera1);
     renderer1.setup();
 
     RenderPass renderPassTexture(512, 512, 0);
     renderPassTexture.disableGLFeature(GL_DEPTH_TEST);
-
     Camera cameraNoProjection;
 
     renderPassTexture.setCamera(cameraNoProjection);
@@ -51,7 +49,7 @@ int main() {
 
     RenderPass renderPass(1020, 720, 2);
     renderPass.enableGLFeature(GL_DEPTH_TEST);
-    renderPass.enableGLFeature(GL_CULL_FACE);
+    //renderPass.enableGLFeature(GL_CULL_FACE);
     renderPass.enableGLFeature(GL_BLEND);
     ///Camera renderPassCamera;
     Camera camera(45.f,
@@ -69,12 +67,20 @@ int main() {
 
     Material material(vertexShader, fragmentShader);
 
-    UniformF contrast = UniformF("contrast", 1, 0,1);
+    UniformF contrast = UniformF("contrast", 0, 0,1);
+    UniformF scale = UniformF("scale", 1, 1,10);
     UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1,1,1), 0,1);
+    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5,5,1), 0,100);
+
     material.addUniform(&contrast);
     material.addUniform(&multColor);
+    material.addUniform(&lightPos);
+    material.addUniform(&scale);
 
-    ObjMesh mesh(material, "../data/obj/bunny_tex.obj");
+    ObjMesh mesh1(material, "../data/obj/bunny_tex.obj");
+
+    mesh1.push();
+    //ObjMesh mesh1(material, "../data/obj/Mario3.obj");
     //Mesh mesh(material, "../data/ply/bun_zipper.ply");
 
 //    mesh.push();
@@ -84,10 +90,11 @@ int main() {
 //    screen1.push();
 
 //    Sphere mesh(material);
-//    Cube mesh(material);
+    Cube mesh(material);
+    mesh.setTranslate(glm::vec3(0,+0.423f, 0));
     mesh.push();
 //    mesh.setRotationX(2.f);
-    mesh.setRotationY(2.f);
+    //mesh.setRotationY(2.f);
 //    mesh.setRotationZ(2.f);
 
     Texture texture("../data/image/tiled/layer0.png");
@@ -111,7 +118,14 @@ int main() {
     mesh.addTexture(texture3, 6);
     mesh.addTexture(texture4, 7);
 
+    mesh1.addTexture(texture, 3);
+    mesh1.addTexture(texture1, 4);
+    mesh1.addTexture(texture2, 5);
+    mesh1.addTexture(texture3, 6);
+    mesh1.addTexture(texture4, 7);
+
     renderPass.addMesh(mesh);
+    renderPass.addMesh(mesh1);
 
     renderer1.pushRenderPass(renderPass);
 

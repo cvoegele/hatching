@@ -84,6 +84,7 @@ void RenderPass::ImGui() {
     for (auto &mesh: meshes) {
         mesh.getMaterial().ImGui();
     }
+    camera.ImGui();
 
 }
 
