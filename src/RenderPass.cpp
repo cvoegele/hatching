@@ -82,6 +82,7 @@ void RenderPass::ImGui() {
     //ImGui::Begin("Renderpass");
     //ImGui::SliderFloat4("clearColor", &clearColor->x, 0,1);
     for (auto &mesh: meshes) {
+
         mesh.getMaterial().ImGui();
     }
     camera.ImGui();

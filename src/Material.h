@@ -13,6 +13,7 @@
 class Material {
 public:
     Material(Shader &vertexShader, Shader &fragmentShader);
+
     Material();
 
     void createProgram();
@@ -25,7 +26,7 @@ public:
 
     void reloadMaterial();
 
-    void addUniform(UniformBase* uniformBase) { uniforms.push_back(uniformBase); }
+    void addUniform(UniformBase *uniformBase) { uniforms.push_back(uniformBase); }
 
     void ImGui();
 
@@ -33,7 +34,7 @@ private:
     Shader vertexShader;
     Shader fragmentShader;
     GLuint program;
-    std::vector<UniformBase*> uniforms;
+    std::vector<UniformBase *> uniforms;
 };
 
 

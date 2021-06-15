@@ -16,12 +16,15 @@
 
 int main() {
 
-    Renderer renderer1(1020, 720);
+    int width = 1920;
+    int height = 1080;
+
+    Renderer renderer1(width, height);
     Camera camera1;
     renderer1.setCamera(camera1);
     renderer1.setup();
 
-    RenderPass renderPassTexture(512, 512, 0);
+    RenderPass renderPassTexture(width, height, 0);
     renderPassTexture.disableGLFeature(GL_DEPTH_TEST);
     Camera cameraNoProjection;
 
@@ -47,7 +50,7 @@ int main() {
     renderer1.pushRenderPass(renderPassTexture);
 
 
-    RenderPass renderPass(1020, 720, 2);
+    RenderPass renderPass(width, height, 2);
     renderPass.enableGLFeature(GL_DEPTH_TEST);
     //renderPass.enableGLFeature(GL_CULL_FACE);
     renderPass.enableGLFeature(GL_BLEND);
@@ -77,9 +80,14 @@ int main() {
     material.addUniform(&lightPos);
     material.addUniform(&scale);
 
-    ObjMesh mesh1(material, "../data/obj/bunny_tex.obj");
+    ObjMesh mesh1(material, "../data/obj/human.obj");
+    mesh1.setScale(glm::vec3(0.01,0.01,0.01));
+
+//    ObjMesh mesh1(material, "../data/obj/human.obj");
+//    mesh1.setScale(glm::vec3(0.01,0.01,0.01));
 
     mesh1.push();
+    mesh1.setRotationY(0.9);
     //ObjMesh mesh1(material, "../data/obj/Mario3.obj");
     //Mesh mesh(material, "../data/ply/bun_zipper.ply");
 
@@ -94,22 +102,67 @@ int main() {
     mesh.setTranslate(glm::vec3(0,+0.423f, 0));
     mesh.push();
 //    mesh.setRotationX(2.f);
-    //mesh.setRotationY(2.f);
+//    mesh.setRotationY(2.f);
 //    mesh.setRotationZ(2.f);
 
-    Texture texture("../data/image/tiled/layer0.png");
+//    Texture texture("../data/image/tiled/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/tiled/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/tiled/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/tiled/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/tiled/layer4.png");
+//    texture4.setup();
+
+//    Texture texture("../data/image/romantic/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/romantic/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/romantic/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/romantic/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/romantic/layer4.png");
+//    texture4.setup();
+
+//    Texture texture("../data/image/peperoni/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/peperoni/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/peperoni/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/peperoni/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/peperoni/layer4.png");
+//    texture4.setup();
+
+    Texture texture("../data/image/dotted/layer0.png");
     texture.setup();
 
-    Texture texture1("../data/image/tiled/layer1.png");
+    Texture texture1("../data/image/dotted/layer1.png");
     texture1.setup();
-//
-    Texture texture2("../data/image/tiled/layer2.png");
+
+    Texture texture2("../data/image/dotted/layer2.png");
     texture2.setup();
 
-    Texture texture3("../data/image/tiled/layer3.png");
+    Texture texture3("../data/image/dotted/layer3.png");
     texture3.setup();
 
-    Texture texture4("../data/image/tiled/layer4.png");
+    Texture texture4("../data/image/dotted/layer4.png");
     texture4.setup();
 
     mesh.addTexture(texture, 3);

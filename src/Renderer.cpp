@@ -38,7 +38,7 @@ Renderer::Renderer(int targetWidth, int targetHeight) :
         enabledGLFeatures(std::vector<int>()),
         camera(Camera()),
         renderPasses(std::vector<std::shared_ptr<RenderPass>>()),
-        clearColor(std::make_shared<glm::vec4>(glm::vec4(1))){
+        clearColor(std::make_shared<glm::vec4>(glm::vec4(1))) {
 }
 
 void Renderer::setup() {
@@ -105,7 +105,6 @@ void Renderer::startRenderLoop() {
         ImGui::NewFrame();
 
 
-
         for (auto &feature : enabledGLFeatures) {
             glEnable(feature);
         }
@@ -128,9 +127,7 @@ void Renderer::startRenderLoop() {
         ImGui::Begin("Inspector");
         //imgui calls
         ImGui();
-        for (auto &renderpass : renderPasses) {
-            renderpass->ImGui();
-        }
+
 
         ImGui::End();
         ImGui::Render();
@@ -175,11 +172,17 @@ void Renderer::setCamera(Camera &camera) {
 
 void Renderer::ImGui() {
 
-    ImGui::SliderFloat4("Clear Color", &clearColor->x, 0,1);
+
+    ImGui::SliderFloat4("Clear Color", &clearColor->x, 0, 1);
     for (auto &mesh: meshes) {
+
         mesh.getMaterial().ImGui();
     }
     camera.ImGui();
+
+    for (auto &renderpass : renderPasses) {
+        renderpass->ImGui();
+    }
 
 }
 
