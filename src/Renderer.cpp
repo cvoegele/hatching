@@ -75,6 +75,8 @@ void Renderer::setup() {
 void Renderer::startRenderLoop() {
     while (!glfwWindowShouldClose(window)) {
 
+
+
         if (recompileShaders) {
             for (auto &mesh : meshes) {
                 mesh.getMaterial().reloadMaterial();
@@ -126,7 +128,20 @@ void Renderer::startRenderLoop() {
 
         ImGui::Begin("Inspector");
         //imgui calls
+        double currentTime = glfwGetTime();
+        framecount++;
+
+        if (currentTime - previousTime >= 1.0) {
+
+            fps = framecount;
+            framecount = 0;
+            previousTime = currentTime;
+        }
+
+        ImGui::LabelText(std::to_string(fps).c_str(), "");
+
         ImGui(0);
+
 
 
         ImGui::End();
@@ -172,11 +187,16 @@ void Renderer::setCamera(Camera &camera) {
 
 void Renderer::ImGui(int counter) {
 
-
     ImGui::SliderFloat4("Clear Color", &clearColor->x, 0, 1);
+    int meshc = 0;
     for (auto &mesh: meshes) {
-        counter++;
-        mesh.getMaterial().ImGui(counter);
+        if (ImGui::CollapsingHeader(("Mesh_" + std::to_string(meshc)).c_str())) {
+            //ImGui::Separator();
+            counter++;
+            mesh.getMaterial().ImGui(counter);
+            mesh.ImGui(counter);
+        }
+        meshc++;
     }
     camera.ImGui();
 

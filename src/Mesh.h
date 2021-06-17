@@ -62,6 +62,8 @@ public:
 
     void setRotationZ(float value) { rotationZ = value; };
 
+    void ImGui(int &counter);
+
 private:
     bool isIndexed();
 
@@ -96,6 +98,9 @@ private:
     float rotationX = 0.f;
     float rotationY = 0.f;
     float rotationZ = 0.f;
+    bool isRotationX;
+    bool isRotationY;
+    bool isRotationZ;
 
 protected:
     explicit Mesh(Material material);

@@ -14,7 +14,7 @@
 #include "src/UniformF.h"
 #include "src/UniformVec3.h"
 
-int main() {
+int main1() {
 
     int width = 1920;
     int height = 1080;
@@ -68,11 +68,11 @@ int main() {
 
     Material material(vertexShader, fragmentShader);
 
-    UniformF contrast = UniformF("contrast", 0, 0,1);
-    UniformF scale = UniformF("scale", 6, 1,10);
-    UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1,1,1), 0,1);
-    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5,5,1), -10,10);
-    UniformI globalTexCoords = UniformI("globalTexCoords", 0,0,1);
+    UniformF contrast = UniformF("contrast", 0, 0, 1);
+    UniformF scale = UniformF("scale", 6, 1, 10);
+    UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1, 1, 1), 0, 1);
+    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5, 5, 1), -10, 10);
+    UniformI globalTexCoords = UniformI("globalTexCoords", 0, 0, 1);
 
     material.addUniform(&contrast);
     material.addUniform(&multColor);
@@ -163,7 +163,7 @@ int main() {
 
     Sphere mesh(material);
 //    Cube mesh(material);
-    mesh.setTranslate(glm::vec3(0,+0.423f, 0));
+    mesh.setTranslate(glm::vec3(0, +0.423f, 0));
     mesh.push();
 
     mesh.addTexture(texture, 3);
@@ -185,7 +185,6 @@ int main() {
 
     renderer1.pushRenderPass(renderPass);
 
-
     renderer1.disableGLFeature(GL_CULL_FACE);
     renderer1.enableGLFeature(GL_DEPTH_TEST);
 
@@ -197,53 +196,160 @@ int main() {
     Screen screen(material1);
     screen.push();
 
-//    Cube cube(material1);
-//    cube.push();
-
     renderer1.addMesh(screen);
     renderer1.startRenderLoop();
 
-//    Renderer renderer(640 * 2, 480 * 2);
-//
-//    Camera camera(45.f,
-//                  renderer.getAspectRatio(),
-//                  0.1f,
-//                  1000.f,
-//                  glm::vec3(0, 0, 0),
-//                  glm::vec3(0, 2, 5.f));
-//
-//    renderer.setCamera(camera);
-//
-//    renderer.setup();
-//    renderer.enableGLFeature(GL_CULL_FACE);
-//    glDepthFunc(GL_LESS);
-//    renderer.enableGLFeature(GL_DEPTH_TEST);
-//    //renderer.disableGLFeature(GL_CULL_FACE);
-//
-//    Shader vertexShader("../src/shaders/vertex.glsl", true);
-//    Shader fragmentShader("../src/shaders/phong.glsl", false);
-//
-//    Material material(vertexShader, fragmentShader);
-//
-//    Mesh mesh(material, "../data/ply/bun_zipper.ply");
-//    mesh.push();
-//
-////    Texture texture( "../data/image/tree.png");
-////    texture.setup();
-////
-////    Texture texture1( "../data/image/dirt.png");
-////    texture.setup();
-//
-//    Cube cubus(material);
-//    cubus.push();
-//    cubus.setTranslate(glm::vec3(1,1,0));
-//
-////    cubus.addTexture(texture);
-////    cubus.addTexture(texture1);
-//
-//    renderer.addMesh(mesh);
-//    renderer.addMesh(cubus);
-//
-//    renderer.startRenderLoop();
+    return 0;
+}
 
+int main() {
+
+    int width = 2400;
+    int height = 1300;
+
+    Renderer renderer(width, height);
+    Camera camera(45.f,
+                  renderer.getAspectRatio(),
+                  0.1f,
+                  1000.f,
+                  glm::vec3(0, 0.f, 0),
+                  glm::vec3(0, 0.2f, 0.3f));
+    renderer.setCamera(camera);
+    renderer.setup();
+
+    //Material 0
+    Shader vertexShader("../src/shaders/vertexScaledTextures.glsl", true);
+    Shader fragmentShader("../src/shaders/hatching0.glsl", false);
+
+    Material material(vertexShader, fragmentShader);
+
+    UniformF contrast = UniformF("contrast", 0, 0, 1);
+    UniformF scale = UniformF("scale", 6, 1, 10);
+    UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1, 1, 1), 0, 1);
+    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5, 5, 1), -10, 10);
+    UniformI globalTexCoords = UniformI("globalTexCoords", 0, 0, 1);
+
+    material.addUniform(&contrast);
+    material.addUniform(&multColor);
+    material.addUniform(&lightPos);
+    material.addUniform(&scale);
+    material.addUniform(&globalTexCoords);
+
+    //Mesh
+//    ObjMesh mainMesh(material, "../data/obj/bunny_tex.obj");
+
+
+//    ObjMesh mainMesh(material, "../data/obj/bunnyatlas.obj");
+    ObjMesh mainMesh(material, "../data/obj/felineatlas.obj");
+    mainMesh.setScale(glm::vec3(0.0005, 0.0005, 0.0005));
+
+//    ObjMesh mainMesh(material, "../data/obj/armadillo.obj");
+//    mainMesh.setScale(glm::vec3(0.1, 0.1, 0.1));
+
+//    Cube mainMesh(material);
+//    Sphere mainMesh(material);
+//    mainMesh.setScale(glm::vec3(0.1, 0.1, 0.1));
+
+//    ObjMesh mainMesh(material, "../data/obj/demon.obj");
+
+//    ObjMesh mainMesh(material, "../data/obj/human.obj");
+//    mainMesh.setScale(glm::vec3(0.01, 0.01, 0.01));
+
+//    ObjMesh mainMesh(material, "../data/obj/lucy.obj");
+//    mainMesh.setScale(glm::vec3(0.1, 0.1, 0.1));
+
+    mainMesh.push();
+
+    //Textures
+    Texture texture("../data/image/tiled/layer0.png");
+    texture.setup();
+
+    Texture texture1("../data/image/tiled/layer1.png");
+    texture1.setup();
+
+    Texture texture2("../data/image/tiled/layer2.png");
+    texture2.setup();
+
+    Texture texture3("../data/image/tiled/layer3.png");
+    texture3.setup();
+
+    Texture texture4("../data/image/tiled/layer4.png");
+    texture4.setup();
+
+//    Texture texture("../data/image/romantic/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/romantic/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/romantic/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/romantic/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/romantic/layer4.png");
+//    texture4.setup();
+
+//    Texture texture("../data/image/dotted/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/dotted/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/dotted/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/dotted/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/dotted/layer4.png");
+//    texture4.setup();
+
+
+    mainMesh.addTexture(texture, 3);
+    mainMesh.addTexture(texture1, 4);
+    mainMesh.addTexture(texture2, 5);
+    mainMesh.addTexture(texture3, 6);
+    mainMesh.addTexture(texture4, 7);
+
+    renderer.addMesh(mainMesh);
+
+    //Material 1
+    Shader vertexShader1("../src/shaders/vertexScaledTextures.glsl", true);
+    Shader fragmentShader1("../src/shaders/hatching0.glsl", false);
+
+    Material material1(vertexShader1, fragmentShader1);
+
+    UniformF contrast1 = UniformF("contrast", 0, 0, 1);
+    UniformF scale1 = UniformF("scale", 6, 1, 10);
+    UniformVec3 multColor1 = UniformVec3("multColor", glm::vec3(1, 1, 1), 0, 1);
+    UniformVec3 lightPos1 = UniformVec3("lightPos", glm::vec3(5, 5, 1), -10, 10);
+    UniformI globalTexCoords1 = UniformI("globalTexCoords", 0, 0, 1);
+
+    material1.addUniform(&contrast1);
+    material1.addUniform(&multColor1);
+    material1.addUniform(&lightPos1);
+    material1.addUniform(&scale1);
+    material1.addUniform(&globalTexCoords1);
+
+    //background mesh
+    Sphere backgroundMesh(material1);
+//    Cube backgroundMesh(material);
+    backgroundMesh.setTranslate(glm::vec3(0, +0.423f, 0));
+    backgroundMesh.push();
+
+    backgroundMesh.addTexture(texture, 3);
+    backgroundMesh.addTexture(texture1, 4);
+    backgroundMesh.addTexture(texture2, 5);
+    backgroundMesh.addTexture(texture3, 6);
+    backgroundMesh.addTexture(texture4, 7);
+
+//    renderer.addMesh(backgroundMesh);
+
+    renderer.disableGLFeature(GL_CULL_FACE);
+    renderer.enableGLFeature(GL_DEPTH_TEST);
+
+    renderer.startRenderLoop();
+    return 0;
 }

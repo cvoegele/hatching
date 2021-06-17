@@ -51,6 +51,9 @@ private:
     std::vector<std::shared_ptr<RenderPass>> renderPasses;
     //glm::vec4 clearColor;
     std::shared_ptr<glm::vec4> clearColor;
+    double previousTime = glfwGetTime();
+    int framecount = 0;
+    int fps;
 };
 
 

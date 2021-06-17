@@ -45,7 +45,6 @@ void Material::linkProgram() {
 
 void Material::ImGui(int &counter) {
     for (auto& uniform : uniforms) {
-
         counter++;
         uniform->ImGui(counter);
     }

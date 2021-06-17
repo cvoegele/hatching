@@ -99,7 +99,7 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
                                                          texCoords(std::vector<glm::vec3>()),
                                                          indices(std::vector<int>()),
                                                          m_textures(std::vector<std::shared_ptr<Texture>>()),
-                                                         m_texturesLayout(std::vector<std::shared_ptr<int>>()){
+                                                         m_texturesLayout(std::vector<std::shared_ptr<int>>()) {
 
     readFromFile(path);
 
@@ -109,7 +109,7 @@ Mesh::Mesh(Material material, const std::string &path) : material(material),
     computeNormals();
 
     texCoords.clear();
-    for (auto& vertex : vertices) {
+    for (auto &vertex : vertices) {
         auto normal = glm::normalize(vertex);
         auto texCoordinate = glm::vec3(normal.x, normal.y, 0);
         normals.push_back(normal);
@@ -124,8 +124,8 @@ void Mesh::draw() {
         glUniform1i(getIsTexturedLocation(), 1);
 
         for (int i = 0; i < m_textures.size(); ++i) {
-            auto& texture = m_textures[i];
-            auto& textureLayout = m_texturesLayout[i];
+            auto &texture = m_textures[i];
+            auto &textureLayout = m_texturesLayout[i];
             glActiveTexture(GL_TEXTURE0 + *textureLayout);
             glBindTexture(GL_TEXTURE_2D, texture->getTextureBuffer());
         }
@@ -337,23 +337,36 @@ void Mesh::setScale(glm::vec3 scale) {
 }
 
 glm::mat4 Mesh::getRotationX() {
-    if (rotationX == 0) return glm::mat4(1.0);
+    if (rotationX == 0 || isRotationX == false) return glm::mat4(1.0);
     float time = glfwGetTime();
     return glm::rotate(glm::mat4(1.0), (float) time / rotationX, glm::vec3(1, 0, 0));
 }
 
 glm::mat4 Mesh::getRotationY() {
-    if (rotationY == 0) return glm::mat4(1.0);
+    if (rotationY == 0 || isRotationY == false) return glm::mat4(1.0);
     float time = glfwGetTime();
     return glm::rotate(glm::mat4(1.0), (float) time / rotationY, glm::vec3(0, 1, 0));
 }
 
 
 glm::mat4 Mesh::getRotationZ() {
-    if (rotationZ == 0) return glm::mat4(1.0);
+    if (rotationZ == 0 || isRotationZ == false) return glm::mat4(1.0);
     float time = glfwGetTime();
     return glm::rotate(glm::mat4(1.0), (float) time / rotationZ, glm::vec3(0, 0, 1));
 }
+
+void Mesh::ImGui(int &counter) {
+
+    ImGui::Separator();
+    ImGui::Checkbox(Util::paramName("RotationOnX",counter).c_str(), &isRotationX);
+    ImGui::SliderFloat(Util::paramName("rotationX", counter).c_str(), &rotationX, -10.f, 10.f);
+    ImGui::Checkbox(Util::paramName("RotationOnY",counter).c_str(), &isRotationY);
+    ImGui::SliderFloat(Util::paramName("rotationY", counter).c_str(), &rotationY, -10.f, 10.f);
+    ImGui::Checkbox(Util::paramName("RotationOnZ",counter).c_str(), &isRotationZ);
+    ImGui::SliderFloat(Util::paramName("rotationZ", counter).c_str(), &rotationZ, -10.f, 10.f);
+
+}
+
 
 
 

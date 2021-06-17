@@ -37,6 +37,7 @@ void Camera::ImGui() {
        if (ImGui::CollapsingHeader("Camera")) {
            ImGui::Separator();
            ImGui::SliderFloat3("Camera Position", &cameraPosition[0], -10, 10);
+           ImGui::SliderFloat3("LookAt", &lookAtPosition[0], -10, 10);
            viewMatrix = glm::lookAt(cameraPosition, lookAtPosition, glm::vec3(0.f, 1.f, 0.f));
            viewProjectionMatrix = projectionMatrix * viewMatrix;
        }

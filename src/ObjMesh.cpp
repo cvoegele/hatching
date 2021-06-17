@@ -31,11 +31,22 @@ ObjMesh::ObjMesh(Material material, std::string path) : Mesh(material) {
         indices.push_back(index);
     }
 
-    //if texcoords are all 000 --> add spherical coordinates
-    for (auto& vertex : vertices) {
-        auto normal = glm::normalize(vertex);
-        auto texCoordinate = glm::vec3(normal.x, normal.y, 0);
-        //normals.push_back(normal);
-        texCoords.push_back(texCoordinate);
+    if (texCoords.size() < vertices.size()){
+        //if texcoords are all 000 --> add spherical coordinates
+//        for (auto& vertex : vertices) {
+//            auto normal = glm::normalize(vertex);
+//            auto texCoordinate = glm::vec3(normal.x, normal.y, 0);
+//            //normals.push_back(normal);
+//            texCoords.push_back(texCoordinate);
+//        }
+
+        for (auto& vertex : vertices) {
+            auto texCoordinate = glm::vec3(vertex.x, vertex.y, 0);
+            //normals.push_back(normal);
+            texCoords.push_back(texCoordinate);
+        }
     }
+
+
+
 }
