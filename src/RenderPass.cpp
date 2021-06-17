@@ -78,12 +78,12 @@ void RenderPass::recompileShaders() {
     }
 }
 
-void RenderPass::ImGui() {
+void RenderPass::ImGui(int &counter) {
     //ImGui::Begin("Renderpass");
     //ImGui::SliderFloat4("clearColor", &clearColor->x, 0,1);
     for (auto &mesh: meshes) {
 
-        mesh.getMaterial().ImGui();
+        mesh.getMaterial().ImGui(counter);
     }
     camera.ImGui();
 

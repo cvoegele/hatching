@@ -16,7 +16,7 @@ public:
 
     void upload(GLuint programId) override;
 
-    void ImGui() override;
+    void ImGui(int &counter) override;
 
 private:
     glm::vec3 value;

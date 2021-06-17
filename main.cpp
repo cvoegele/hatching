@@ -44,11 +44,9 @@ int main() {
 
     brushScreen.addTexture(brushTexture, 1);
 
-
     renderPassTexture.addMesh(brushScreen);
 
     renderer1.pushRenderPass(renderPassTexture);
-
 
     RenderPass renderPass(width, height, 2);
     renderPass.enableGLFeature(GL_DEPTH_TEST);
@@ -71,23 +69,27 @@ int main() {
     Material material(vertexShader, fragmentShader);
 
     UniformF contrast = UniformF("contrast", 0, 0,1);
-    UniformF scale = UniformF("scale", 1, 1,10);
+    UniformF scale = UniformF("scale", 6, 1,10);
     UniformVec3 multColor = UniformVec3("multColor", glm::vec3(1,1,1), 0,1);
-    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5,5,1), 0,100);
+    UniformVec3 lightPos = UniformVec3("lightPos", glm::vec3(5,5,1), -10,10);
+    UniformI globalTexCoords = UniformI("globalTexCoords", 0,0,1);
 
     material.addUniform(&contrast);
     material.addUniform(&multColor);
     material.addUniform(&lightPos);
     material.addUniform(&scale);
+    material.addUniform(&globalTexCoords);
 
-    ObjMesh mesh1(material, "../data/obj/human.obj");
-    mesh1.setScale(glm::vec3(0.01,0.01,0.01));
+//    ObjMesh mesh1(material, "../data/obj/human.obj");
+//    mesh1.setScale(glm::vec3(0.01,0.01,0.01));
+
+    ObjMesh mesh1(material, "../data/obj/bunny_tex.obj");
 
 //    ObjMesh mesh1(material, "../data/obj/human.obj");
 //    mesh1.setScale(glm::vec3(0.01,0.01,0.01));
 
     mesh1.push();
-    mesh1.setRotationY(0.9);
+    //mesh1.setRotationY(0.9);
     //ObjMesh mesh1(material, "../data/obj/Mario3.obj");
     //Mesh mesh(material, "../data/ply/bun_zipper.ply");
 
@@ -97,28 +99,22 @@ int main() {
 //    Screen screen1(material);
 //    screen1.push();
 
-//    Sphere mesh(material);
-    Cube mesh(material);
-    mesh.setTranslate(glm::vec3(0,+0.423f, 0));
-    mesh.push();
-//    mesh.setRotationX(2.f);
-//    mesh.setRotationY(2.f);
-//    mesh.setRotationZ(2.f);
 
-//    Texture texture("../data/image/tiled/layer0.png");
-//    texture.setup();
-//
-//    Texture texture1("../data/image/tiled/layer1.png");
-//    texture1.setup();
-//
-//    Texture texture2("../data/image/tiled/layer2.png");
-//    texture2.setup();
-//
-//    Texture texture3("../data/image/tiled/layer3.png");
-//    texture3.setup();
-//
-//    Texture texture4("../data/image/tiled/layer4.png");
-//    texture4.setup();
+
+    Texture texture("../data/image/tiled/layer0.png");
+    texture.setup();
+
+    Texture texture1("../data/image/tiled/layer1.png");
+    texture1.setup();
+
+    Texture texture2("../data/image/tiled/layer2.png");
+    texture2.setup();
+
+    Texture texture3("../data/image/tiled/layer3.png");
+    texture3.setup();
+
+    Texture texture4("../data/image/tiled/layer4.png");
+    texture4.setup();
 
 //    Texture texture("../data/image/romantic/layer0.png");
 //    texture.setup();
@@ -150,26 +146,33 @@ int main() {
 //    Texture texture4("../data/image/peperoni/layer4.png");
 //    texture4.setup();
 
-    Texture texture("../data/image/dotted/layer0.png");
-    texture.setup();
+//    Texture texture("../data/image/dotted/layer0.png");
+//    texture.setup();
+//
+//    Texture texture1("../data/image/dotted/layer1.png");
+//    texture1.setup();
+//
+//    Texture texture2("../data/image/dotted/layer2.png");
+//    texture2.setup();
+//
+//    Texture texture3("../data/image/dotted/layer3.png");
+//    texture3.setup();
+//
+//    Texture texture4("../data/image/dotted/layer4.png");
+//    texture4.setup();
 
-    Texture texture1("../data/image/dotted/layer1.png");
-    texture1.setup();
-
-    Texture texture2("../data/image/dotted/layer2.png");
-    texture2.setup();
-
-    Texture texture3("../data/image/dotted/layer3.png");
-    texture3.setup();
-
-    Texture texture4("../data/image/dotted/layer4.png");
-    texture4.setup();
+    Sphere mesh(material);
+//    Cube mesh(material);
+    mesh.setTranslate(glm::vec3(0,+0.423f, 0));
+    mesh.push();
 
     mesh.addTexture(texture, 3);
     mesh.addTexture(texture1, 4);
     mesh.addTexture(texture2, 5);
     mesh.addTexture(texture3, 6);
     mesh.addTexture(texture4, 7);
+    renderPass.addMesh(mesh);
+
 
     mesh1.addTexture(texture, 3);
     mesh1.addTexture(texture1, 4);
@@ -177,7 +180,7 @@ int main() {
     mesh1.addTexture(texture3, 6);
     mesh1.addTexture(texture4, 7);
 
-    renderPass.addMesh(mesh);
+
     renderPass.addMesh(mesh1);
 
     renderer1.pushRenderPass(renderPass);

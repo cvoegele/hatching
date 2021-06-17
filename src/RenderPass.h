@@ -42,7 +42,7 @@ public:
 
     GLuint getFrameBuffer() { return frameBuffer; };
 
-    void ImGui();
+    void ImGui(int &counter);
 
     std::shared_ptr<glm::vec4> clearColor;
 private:

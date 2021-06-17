@@ -7,6 +7,7 @@
 
 
 #include "commonincludes.h"
+#include "Util.h"
 
 class UniformBase {
 public:
@@ -17,7 +18,7 @@ public:
 
     };
 
-    virtual void ImGui() {
+    virtual void ImGui(int &counter) {
 
     };
 protected:

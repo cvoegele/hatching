@@ -9,6 +9,7 @@ uniform mat4 MVP;
 uniform mat4 M;
 uniform mat4 MNor;
 uniform float scale;
+uniform int globalTexCoords;
 
 out vec3 color;
 out vec3 normal;
@@ -24,5 +25,10 @@ void main()
     color = vCol;
     worldPos = (M * vec4(vPos, 1.0)).xyz;
     normal = ((MNor) * vec4(vNor, 1.0)).xyz;
-    texCoord = vTexCoord.xy * scale;
+    if  (globalTexCoords == 1) {
+        texCoord = screenPos.xy * scale;
+    } else {
+        texCoord = vTexCoord.xy * scale;
+    }
+
 }

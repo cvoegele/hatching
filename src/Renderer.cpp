@@ -126,7 +126,7 @@ void Renderer::startRenderLoop() {
 
         ImGui::Begin("Inspector");
         //imgui calls
-        ImGui();
+        ImGui(0);
 
 
         ImGui::End();
@@ -170,18 +170,19 @@ void Renderer::setCamera(Camera &camera) {
     this->camera = camera;
 }
 
-void Renderer::ImGui() {
+void Renderer::ImGui(int counter) {
 
 
     ImGui::SliderFloat4("Clear Color", &clearColor->x, 0, 1);
     for (auto &mesh: meshes) {
-
-        mesh.getMaterial().ImGui();
+        counter++;
+        mesh.getMaterial().ImGui(counter);
     }
     camera.ImGui();
 
     for (auto &renderpass : renderPasses) {
-        renderpass->ImGui();
+        counter++;
+        renderpass->ImGui(counter);
     }
 
 }

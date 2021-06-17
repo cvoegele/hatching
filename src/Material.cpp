@@ -43,10 +43,11 @@ void Material::linkProgram() {
     glLinkProgram(program);
 }
 
-void Material::ImGui() {
+void Material::ImGui(int &counter) {
     for (auto& uniform : uniforms) {
 
-        uniform->ImGui();
+        counter++;
+        uniform->ImGui(counter);
     }
 }
 

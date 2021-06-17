@@ -9,13 +9,13 @@
 #include <string>
 #include "UniformBase.h"
 
-class UniformI : UniformBase {
+class UniformI : public UniformBase {
 public:
     UniformI(const std::string &name, int value, int min, int max);
 
     void upload(GLuint programId) override;
 
-    void ImGui() override;
+    void ImGui(int &counter) override;
 
 private:
     int value;

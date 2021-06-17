@@ -5,8 +5,9 @@
 #include "UniformF.h"
 
 
-void UniformF::ImGui() {
-    ImGui::SliderFloat(name.c_str(), &value, min,max);
+
+void UniformF::ImGui(int &counter) {
+    ImGui::SliderFloat(Util::paramName(name, counter).c_str(), &value, min,max);
 }
 
 void UniformF::upload(GLuint programId) {

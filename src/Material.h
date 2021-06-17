@@ -28,7 +28,7 @@ public:
 
     void addUniform(UniformBase *uniformBase) { uniforms.push_back(uniformBase); }
 
-    void ImGui();
+    void ImGui(int &counter);
 
 private:
     Shader vertexShader;

@@ -15,7 +15,7 @@ public:
 
     virtual void upload(GLuint programId) override;
 
-    virtual void ImGui() override;
+    virtual void ImGui(int &counter) override;
 
 private:
     float value;

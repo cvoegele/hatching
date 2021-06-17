@@ -8,11 +8,18 @@
 
 #include <string>
 #include <memory>
-#include "Mesh.h"
+
+
 
 class Util {
 public:
+
     static std::string readFile2(const std::string &fileName);
+
+
+    static std::string paramName(std::string const &key, int imguicounter) {
+        return key + std::to_string(imguicounter);
+    }
 };
 
 

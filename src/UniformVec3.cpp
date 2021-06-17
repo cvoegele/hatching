@@ -12,6 +12,6 @@ void UniformVec3::upload(GLuint programId) {
     glUniform3fv(location, 1, &value[0]);
 }
 
-void UniformVec3::ImGui() {
-    ImGui::SliderFloat3(name.c_str(), &value[0], min, max);
+void UniformVec3::ImGui(int &counter) {
+    ImGui::SliderFloat3(Util::paramName(name, counter).c_str(), &value[0], min, max);
 }

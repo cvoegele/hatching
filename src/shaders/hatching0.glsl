@@ -21,6 +21,7 @@ layout (binding = 7) uniform sampler2D texture4;
 
 uniform int isTex;
 
+
 //Declaration
 vec4 lambertDiffuse(vec3 n, vec3 lightToPoint, vec4 colorX);
 vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint, float k);
@@ -29,6 +30,7 @@ vec4 modifiyTextureColor(float modifier, float brightness, vec4 texture);
 void main()
 {
     if (isTex == 1) {
+
         vec4 lightTexture =  texture(texture0, texCoord);
         vec4 mediumTexture =  texture(texture1, texCoord);
         vec4 darkTexture =  texture(texture2, texCoord);
@@ -46,18 +48,20 @@ void main()
 
         //colour = color;
 
-        //colour = vec4(brightness, brightness, brightness, 1.0);
-        colour = clamp((modifiyTextureColor(0.6, brightness, reallyReallyDarkTexture)
+//        colour = vec4(brightness, brightness, brightness, 1.0);
+        colour = clamp(
+        (
+        modifiyTextureColor(0.6, brightness, darkTexture)
         + modifiyTextureColor(0.4, brightness, reallyDarkTexture)
         + modifiyTextureColor(1, brightness, lightTexture)
         + modifiyTextureColor(0.8, brightness, mediumTexture)
-        + modifiyTextureColor(0.1, brightness, reallyReallyDarkTexture)), 0, 1);
+        + modifiyTextureColor(0.1, brightness, reallyReallyDarkTexture)
+        ), 0, 1);
         colour.xyz = vec3(1 - colour.a);
 
         float f = (contrast + 1) / (1 - contrast);
 
         colour.xyz = clamp(f * (colour.xyz - 0.5) + 0.5, 0,1);
-
 
         colour.xyz = colour.xyz * multColor;
 

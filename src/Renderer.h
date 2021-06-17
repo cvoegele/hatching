@@ -38,7 +38,7 @@ public:
         renderPasses.pop_back();
     }
 
-    void ImGui();
+    void ImGui(int imguicounter);
 
 
 private:

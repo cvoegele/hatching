@@ -9,8 +9,8 @@ void UniformI::upload(GLuint programId) {
     glUniform1i(location, value);
 }
 
-void UniformI::ImGui() {
-    ImGui::SliderInt(name.c_str(), &value, min, max);
+void UniformI::ImGui(int &counter) {
+    ImGui::SliderInt(Util::paramName(name, counter).c_str(), &value, min, max);
 }
 
 UniformI::UniformI(const std::string &name, int value, int min, int max) : UniformBase(name), value(value), min(min), max(max) {
