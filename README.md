@@ -1,4 +1,4 @@
-#Shader Program Hatching
+# Shader Program Hatching
 
 Opengl and GLSL Program to create a hand-drawn effect with shaders.
 
