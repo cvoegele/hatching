@@ -5,6 +5,7 @@
 #ifndef HATCHING_RENDERPASS_H
 #define HATCHING_RENDERPASS_H
 
+#include <algorithm>
 #include "commonincludes.h"
 #include "Mesh.h"
 #include "Camera.h"

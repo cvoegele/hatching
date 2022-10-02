@@ -6,9 +6,7 @@
 #define TEST_MESH_H
 
 
-#include <vector>
-#include <memory>
-#include <glm/mat4x4.hpp>
+
 #include "Material.h"
 #include "Texture.h"
 #include "Camera.h"

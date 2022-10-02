@@ -1,7 +1,7 @@
 
 #include "src/commonincludes.h"
 #include <glm/matrix.hpp>
-#include <iostream>
+//#include <iostream>
 #include "src/Shader.h"
 #include "src/Material.h"
 #include "src/Mesh.h"

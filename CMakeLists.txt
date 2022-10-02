@@ -6,10 +6,10 @@ project(${MY_PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 17)
 
 if (WIN32)
-    set(PATH_TO_GLFW_HEADER C:/Users/cvoegele/Development/glfw-3.3.3/include)
-    set(PATH_TO_GLFW_LIB C:/Users/cvoegele/Development/glfw-3.3.3/build/src/Release)
+    set(PATH_TO_GLFW_HEADER C:/Users/chris/Development/glfw-3.3.8.bin.WIN64/include)
+    set(PATH_TO_GLFW_LIB C:/Users/chris/Development/glfw-3.3.8.bin.WIN64/lib-mingw-w64)
     set(GLFW_LIB_NAME glfw3.lib)
-    set(ADDITIONAL_LIBS )
+    set(ADDITIONAL_LIBS imm32)
 endif ()
 
 if (APPLE)
