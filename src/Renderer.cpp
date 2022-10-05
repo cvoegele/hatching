@@ -5,11 +5,11 @@
 #include <glad/gl.h>
 #include "glm/ext.hpp"
 #include <iostream>
-#include <imgui/imgui.h>
-#include <imgui_glfw/imgui_impl_glfw.h>
-#include <imgui_glfw/imgui_impl_opengl3.h>
-#include <glm/gtx/string_cast.hpp>
+#include "imgui/imgui.h"
 #include "Renderer.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
+
 
 static void error_callback(int error, const char *description) {
     fprintf(stderr, "Error: %s\n", description);

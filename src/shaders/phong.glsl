@@ -8,38 +8,45 @@ in vec3 normal;
 in vec2 texCoord;
 
 uniform vec3 cameraPos;
+uniform vec3 lightPos;
 
-layout (binding = 0) uniform sampler2D texture0;
-layout (binding = 1) uniform sampler2D texture1;
+layout (binding = 0) uniform sampler2D baseTexture;
+layout (binding = 1) uniform sampler2D normalMap;
 //uniform sampler2D texture0;
 //uniform sampler2D texture1;
 
 uniform int isTex;
+uniform int isNormalMapped;
 
 //Declaration
-vec4 lambertDiffuse(vec3 n, vec3 lightToPoint);
+vec4 lambertDiffuse(vec3 n, vec3 lightToPoint, vec4 colorAtPixel);
 vec4 specular(vec3 n, vec3 lightToPoint, vec3 eyeToPoint);
 
 void main()
 {
+    vec4 colorAtPixel = color;
     if (isTex == 1) {
-        colour =  texture(texture1, texCoord) * texture(texture0, texCoord);
-        //colour = vec4(texCoord, 0.0, 1.0);
-    } else {
-
-        vec3 lightPosition = vec3(-10, 50, -10);
-        vec3 lightToPoint = normalize(lightPosition - worldPos);
-        vec3 n = normalize(normal);
-        vec3 eyeToPoint = normalize(cameraPos - worldPos);
-
-        colour = lambertDiffuse(n, lightToPoint) + specular(n, lightToPoint, eyeToPoint);
+        colorAtPixel =  texture(baseTexture, texCoord);
+        //colour = vec4(texCoord, 0.0, 1.0)
     }
+    vec3 normalAtPixel = normal;
+    if (isNormalMapped == 1){
+        normalAtPixel = vec3(texture(normalMap, texCoord));
+    }
+
+    vec3 lightPosition = lightPos;
+    vec3 lightToPoint = normalize(lightPosition - worldPos);
+    vec3 n = normalize(normalAtPixel);
+    vec3 eyeToPoint = normalize(cameraPos - worldPos);
+
+    colour = lambertDiffuse(n, lightToPoint, colorAtPixel) + specular(n, lightToPoint, eyeToPoint);
+
 }
 
 //Definition
-vec4 lambertDiffuse(vec3 n, vec3 lightToPoint) {
+vec4 lambertDiffuse(vec3 n, vec3 lightToPoint, vec4 colorAtPixel) {
     float angle = dot(n, lightToPoint);
-    vec4 diffuse = color * angle;
+    vec4 diffuse = colorAtPixel * angle;
 
     if (angle > 0) {
         return diffuse;

@@ -219,7 +219,7 @@ int main() {
 
     //Material 0
     Shader vertexShader("../src/shaders/vertexScaledTextures.glsl", true);
-    Shader fragmentShader("../src/shaders/hatching0.glsl", false);
+    Shader fragmentShader("../src/shaders/phong.glsl", false);
 
     Material material(vertexShader, fragmentShader);
 
@@ -240,8 +240,8 @@ int main() {
 
 
 //    ObjMesh mainMesh(material, "../data/obj/bunnyatlas.obj");
-    ObjMesh mainMesh(material, "../data/obj/felineatlas.obj");
-    mainMesh.setScale(glm::vec3(0.0005, 0.0005, 0.0005));
+    ObjMesh mainMesh(material, "../data/obj/bunny_tex.obj");
+    mainMesh.setScale(glm::vec3(1, 1, 1));
 
 //    ObjMesh mainMesh(material, "../data/obj/armadillo.obj");
 //    mainMesh.setScale(glm::vec3(0.1, 0.1, 0.1));
@@ -261,20 +261,20 @@ int main() {
     mainMesh.push();
 
     //Textures
-    Texture texture("../data/image/tiled/layer0.png");
-    texture.setup();
+   Texture texture("../data/image/brick.jpg");
+   texture.setup();
 
-    Texture texture1("../data/image/tiled/layer1.png");
-    texture1.setup();
+   Texture texture1("../data/image/normal/bumpy_normal.jpeg");
+   texture1.setup();
 
-    Texture texture2("../data/image/tiled/layer2.png");
-    texture2.setup();
+   //Texture texture2("../data/image/tiled/layer2.png");
+   //texture2.setup();
 
-    Texture texture3("../data/image/tiled/layer3.png");
-    texture3.setup();
+   //Texture texture3("../data/image/tiled/layer3.png");
+   //texture3.setup();
 
-    Texture texture4("../data/image/tiled/layer4.png");
-    texture4.setup();
+   //Texture texture4("../data/image/tiled/layer4.png");
+   //texture4.setup();
 
 //    Texture texture("../data/image/romantic/layer0.png");
 //    texture.setup();
@@ -307,43 +307,43 @@ int main() {
 //    texture4.setup();
 
 
-    mainMesh.addTexture(texture, 3);
-    mainMesh.addTexture(texture1, 4);
-    mainMesh.addTexture(texture2, 5);
-    mainMesh.addTexture(texture3, 6);
-    mainMesh.addTexture(texture4, 7);
+    mainMesh.addTexture(texture, 0);
+    mainMesh.addTexture(texture1, 1);
+    //mainMesh.addTexture(texture2, 5);
+    //mainMesh.addTexture(texture3, 6);
+    //mainMesh.addTexture(texture4, 7);
 
     renderer.addMesh(mainMesh);
 
     //Material 1
-    Shader vertexShader1("../src/shaders/vertexScaledTextures.glsl", true);
-    Shader fragmentShader1("../src/shaders/hatching0.glsl", false);
-
-    Material material1(vertexShader1, fragmentShader1);
-
-    UniformF contrast1 = UniformF("contrast", 0, 0, 1);
-    UniformF scale1 = UniformF("scale", 6, 1, 10);
-    UniformVec3 multColor1 = UniformVec3("multColor", glm::vec3(1, 1, 1), 0, 1);
-    UniformVec3 lightPos1 = UniformVec3("lightPos", glm::vec3(5, 5, 1), -10, 10);
-    UniformI globalTexCoords1 = UniformI("globalTexCoords", 0, 0, 1);
-
-    material1.addUniform(&contrast1);
-    material1.addUniform(&multColor1);
-    material1.addUniform(&lightPos1);
-    material1.addUniform(&scale1);
-    material1.addUniform(&globalTexCoords1);
-
-    //background mesh
-    Sphere backgroundMesh(material1);
-//    Cube backgroundMesh(material);
-    backgroundMesh.setTranslate(glm::vec3(0, +0.423f, 0));
-    backgroundMesh.push();
-
-    backgroundMesh.addTexture(texture, 3);
-    backgroundMesh.addTexture(texture1, 4);
-    backgroundMesh.addTexture(texture2, 5);
-    backgroundMesh.addTexture(texture3, 6);
-    backgroundMesh.addTexture(texture4, 7);
+    //Shader vertexShader1("../src/shaders/vertexScaledTextures.glsl", true);
+    //Shader fragmentShader1("../src/shaders/hatching0.glsl", false);
+//
+    //Material material1(vertexShader1, fragmentShader1);
+//
+    //UniformF contrast1 = UniformF("contrast", 0, 0, 1);
+    //UniformF scale1 = UniformF("scale", 6, 1, 10);
+    //UniformVec3 multColor1 = UniformVec3("multColor", glm::vec3(1, 1, 1), 0, 1);
+    //UniformVec3 lightPos1 = UniformVec3("lightPos", glm::vec3(5, 5, 1), -10, 10);
+    //UniformI globalTexCoords1 = UniformI("globalTexCoords", 0, 0, 1);
+//
+    //material1.addUniform(&contrast1);
+    //material1.addUniform(&multColor1);
+    //material1.addUniform(&lightPos1);
+    //material1.addUniform(&scale1);
+    //material1.addUniform(&globalTexCoords1);
+//
+    ////background mesh
+    //Sphere backgroundMesh(material1);
+//  //  Cube backgroundMesh(material);
+    //backgroundMesh.setTranslate(glm::vec3(0, +0.423f, 0));
+    //backgroundMesh.push();
+//
+    //backgroundMesh.addTexture(texture, 3);
+    //backgroundMesh.addTexture(texture1, 4);
+    //backgroundMesh.addTexture(texture2, 5);
+    //backgroundMesh.addTexture(texture3, 6);
+    //backgroundMesh.addTexture(texture4, 7);
 
 //    renderer.addMesh(backgroundMesh);
 

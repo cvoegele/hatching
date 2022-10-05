@@ -37,6 +37,8 @@ public:
 
     GLuint getIsTexturedLocation() const { return uniformIsTextured; };
 
+    GLuint getIsNormalMappedLocation() const { return uniformIsNormalMapped; };
+
     GLuint getTextureBuffer() const { return texCoordinateBuffer; };
 
     Material &getMaterial();
@@ -47,6 +49,8 @@ public:
     };
 
     bool isTextured() { return (m_textures.size() > 0); }
+
+    bool isNormalMapped() { return (m_textures.size() > 1); }
 
     void setRotation(glm::vec3 axis, float value);
 
@@ -79,6 +83,7 @@ private:
     GLuint uniformCameraPosition;
     GLuint uniformMNormalPosition;
     GLuint uniformIsTextured;
+    GLuint uniformIsNormalMapped;
     GLuint vertexBuffer;
     GLuint colorBuffer;
     GLuint indexBuffer;

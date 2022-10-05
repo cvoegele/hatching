@@ -76,6 +76,7 @@ void Mesh::push() {
     uniformCameraPosition = glGetUniformLocation(material.getProgram(), "cameraPos");
     uniformMNormalPosition = glGetUniformLocation(material.getProgram(), "MNor");
     uniformIsTextured = glGetUniformLocation(material.getProgram(), "isTex");
+    uniformIsNormalMapped = glGetUniformLocation(material.getProgram(), "isNormalMapped");
     uniformWidthPosition = glGetUniformLocation(material.getProgram(), "width");
     uniformHeightPosition = glGetUniformLocation(material.getProgram(), "height");
 
@@ -133,6 +134,11 @@ void Mesh::draw() {
     } else {
         glUniform1i(getIsTexturedLocation(), 0);
     }
+    if (isNormalMapped()) {
+        glUniform1i(getIsNormalMappedLocation(), 1);
+    } else {
+        glUniform1i(getIsNormalMappedLocation(), 0);
+    }
 
     if (isIndexed()) {
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
@@ -144,8 +150,6 @@ void Mesh::draw() {
         glDrawArrays(GL_TRIANGLES, 0, vertices.size());
         glBindBuffer(GL_ARRAY_BUFFER, GL_ZERO);
     }
-
-
 }
 
 glm::mat4x4 Mesh::getModelMatrix() {
